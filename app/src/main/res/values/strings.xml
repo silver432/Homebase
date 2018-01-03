@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Homebase</string>
+    <string name="facebook_application_id" translatable="false">767836013414207</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb767836013414207</string>
 </resources>
