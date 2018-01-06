@@ -1,4 +1,9 @@
-./idea/
+# Mac
+.DS_Store
+
+# Intellij
+*.iml
+.idea/
 
 # Built application files
 *.apk
