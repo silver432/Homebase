@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading">로딩중&#8230;</string>
+    <string name="logo">홈베이스로고</string>
+    <string name="email">이메일</string>
+    <string name="password">비밀번호</string>
+    <string name="password_confirm">비밀번호 확인</string>
+    <string name="login">로그인</string>
+    <string name="sign_up">회원가입</string>
+    <string name="find_email_password">이메일/비밀번호 찾기</string>
+    <string name="google_login">Google 계정으로 시작</string>
+    <string name="facebook_login">Facebook 계정으로 시작</string>
+    <string name="login_warning">이메일/비밀번호를 입력해 주세요</string>
+    <string name="login_failure">이메일/비밀번호를 확인해 주세요</string>
+    <string name="signup_confirm">완료</string>
+</resources>

@@ -3,4 +3,16 @@
     <string name="facebook_app_id">710150745832472</string>
     <string name="fb_login_protocol_scheme">fb710150745832472</string>
     <string name="loading">Loading&#8230;</string>
+    <string name="logo">homebase_logo</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="password_confirm">Password Confirm</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="find_email_password">Find email/password</string>
+    <string name="google_login">Login with Google</string>
+    <string name="facebook_login">Login with Facebook</string>
+    <string name="login_warning">Please enter email/password</string>
+    <string name="login_failure">Please check your email/password</string>
+    <string name="signup_confirm">Confirm</string>
 </resources>

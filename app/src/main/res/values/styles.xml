@@ -13,5 +13,20 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <!-- No Title Bar(Login) -->
+    <style name="AppTheme.NoActionBar">
+        <item name="colorAccent">#2c2c2c</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Sign Up Theme -->
+    <style name="AppTheme.SignUpTheme">
+        <item name="colorAccent">#00b4df</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">#2c2c2c</item>
+        <item name="colorControlNormal">#ffffff</item>
+    </style>
 
 </resources>

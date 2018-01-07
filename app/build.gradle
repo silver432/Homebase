@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.jasen.kimjaeseung.homebase"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -37,6 +37,9 @@ dependencies {
 
     // Google Sign In SDK (only required for Google Sign In)
     compile 'com.google.android.gms:play-services-auth:11.8.0'
+
+    // Android design
+    compile 'com.android.support:design:26.1.0'
 
 }
 
