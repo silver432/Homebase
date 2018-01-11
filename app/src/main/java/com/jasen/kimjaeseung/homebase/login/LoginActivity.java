@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +36,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.main.MainActivity;
+import com.jasen.kimjaeseung.homebase.util.BaseTextWatcher;
 import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
 
@@ -53,9 +56,13 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.login_btn_facebook)
     Button facebookLoginButton;
     @BindView(R.id.login_et_email)
-    EditText signInEmailEditText;
+    TextInputEditText signInEmailEditText;
     @BindView(R.id.login_et_password)
-    EditText signInPasswordEditText;
+    TextInputEditText signInPasswordEditText;
+    @BindView(R.id.login_til_email)
+    TextInputLayout signInEmailLayout;
+    @BindView(R.id.login_til_password)
+    TextInputLayout signInPasswordLayout;
 
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
@@ -111,6 +118,10 @@ public class LoginActivity extends AppCompatActivity {
     private void init() {
         initGoogleSignIn();
         initFacebookSignIn();
+
+        //add textwatcher to edittext
+        signInEmailEditText.addTextChangedListener(new BaseTextWatcher(this,signInEmailLayout,signInEmailEditText,null));
+        signInPasswordEditText.addTextChangedListener(new BaseTextWatcher(this,signInPasswordLayout,signInPasswordEditText,null));
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -245,6 +256,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         } else {
                             // Sign in fail
+                            ToastUtils.showToast(getApplicationContext(),getString(R.string.login_failure_msg));
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                         }
 

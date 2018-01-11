@@ -29,4 +29,9 @@
         <item name="colorControlNormal">#ffffff</item>
     </style>
 
+    <style name="Inactive" parent="AppTheme">
+        <item name="android:textColorPrimary">@android:color/darker_gray</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
 </resources>

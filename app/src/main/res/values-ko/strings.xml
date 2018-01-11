@@ -13,4 +13,8 @@
     <string name="login_warning">이메일/비밀번호를 입력해 주세요</string>
     <string name="login_failure">이메일/비밀번호를 확인해 주세요</string>
     <string name="signup_confirm">완료</string>
+    <string name="login_email_err_msg">이메일을 확인해 주세요</string>
+    <string name="signup_password_err_msg">비밀번호를 확인해 주세요</string>
+    <string name="login_failure_msg">로그인에 실패하였습니다</string>
+    <string name="signup_failure">회원가입 실패</string>
 </resources>
