@@ -27,7 +27,7 @@ public class BaseTextWatcher implements TextWatcher {
         this.view = view;
         this.textInputLayout = (TextInputLayout) view;
         this.textInputEditText = textInputEditText;
-        this.checkInputEditText=checkEditText;
+        this.checkInputEditText = checkEditText;
     }
 
     @Override
@@ -52,6 +52,12 @@ public class BaseTextWatcher implements TextWatcher {
             case R.id.signup_til_password_confirm:
                 signUpValidatePasswordConfirm();
                 break;
+            case R.id.signup_til_name:
+                signUpValidateName();
+                break;
+            case R.id.signup_til_birth:
+                signUpValidateBirth();
+                break;
         }
     }
 
@@ -61,38 +67,63 @@ public class BaseTextWatcher implements TextWatcher {
         if (email.isEmpty() || !isValidEmail(email)) {
             textInputLayout.setError(context.getString(R.string.login_email_err_msg));
             textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        } else {
-            textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.login_valid_symbol, 0);
-            textInputLayout.setErrorEnabled(false);
-        }
+        } else validate();
     }
 
-    private void signUpValidateEmail(){
+    private void signUpValidateEmail() {
         String email = textInputEditText.getText().toString();
 
         if (email.isEmpty() || !isValidEmail(email)) {
             textInputLayout.setError(context.getString(R.string.login_email_err_msg));
             textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        } else {
-            textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.signup_valid_symbol, 0);
-            textInputLayout.setErrorEnabled(false);
-        }
+        } else validate();
+
     }
 
-    private void signUpValidatePasswordConfirm(){
+    private void signUpValidatePasswordConfirm() {
         String password = checkInputEditText.getText().toString();
         String passwordConfirm = textInputEditText.getText().toString();
 
-        if (!password.equals(passwordConfirm)){
+        if (!password.equals(passwordConfirm)) {
             textInputLayout.setError(context.getString(R.string.signup_password_err_msg));
             textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        }else {
-            textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.signup_valid_symbol, 0);
-            textInputLayout.setErrorEnabled(false);
-        }
+        } else validate();
+
+    }
+
+    private void signUpValidateName() {
+        String name = textInputEditText.getText().toString();
+
+        if (name.isEmpty() || !isValidateName(name)) {
+            textInputLayout.setError(context.getString(R.string.signup_name_err_msg));
+            textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        } else validate();
+
+    }
+
+    private boolean isValidateName(String name) {
+        return name.length()>=2 && name.length()<=10;
+    }
+
+    private void signUpValidateBirth() {
+        String birth = textInputEditText.getText().toString();
+
+        if (birth.isEmpty()||!isValidateBirth(birth)){
+            textInputLayout.setError(context.getString(R.string.signup_birth_err_msg));
+            textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }else validate();
+    }
+
+    private boolean isValidateBirth(String birth){
+        return birth.matches("^\\d{4}.\\d{2}.\\d{2}$");
     }
 
     private boolean isValidEmail(String email) {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void validate() {
+        textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.signup_valid_symbol, 0);
+        textInputLayout.setErrorEnabled(false);
     }
 }

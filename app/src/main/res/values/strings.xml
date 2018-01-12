@@ -13,10 +13,17 @@
     <string name="google_login">Login with Google</string>
     <string name="facebook_login">Login with Facebook</string>
     <string name="login_warning">Please enter email/password</string>
-    <string name="login_failure">Please check your email/password</string>
-    <string name="login_failure_msg">Login failed</string>
+    <string name="login_failure">Please fill in blank</string>
+    <string name="login_failure_msg">Login failed. Please check email/password</string>
     <string name="signup_confirm">Confirm</string>
     <string name="login_email_err_msg">Please check your Email</string>
     <string name="signup_password_err_msg">Please check your Password</string>
     <string name="signup_failure">Sign Up failed</string>
+    <string name="signup_success">Sign up Success</string>
+    <string name="name">Name</string>
+    <string name="birth">Date of birth</string>
+    <string name="signup_name_err_msg">Please enter name 2~10 letters</string>
+    <string name="signup_birth_err_msg">Please enter birth YYYY.MM.dd</string>
+    <string name="signup_user_collision">Already Sign up</string>
+
 </resources>
