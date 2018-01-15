@@ -25,5 +25,20 @@
     <string name="signup_name_err_msg">Please enter name 2~10 letters</string>
     <string name="signup_birth_err_msg">Please enter birth YYYY.MM.dd</string>
     <string name="signup_user_collision">Already Sign up</string>
-
+    <string name="signup_password_err_msg2">Please enter more than 6 letters</string>
+    <string name="signup2_complete">Welcome to Homebase</string>
+    <string name="signup2_register_team">Not register yet</string>
+    <string name="signup2_register_team_2">Register Team</string>
+    <string name="signup2_join_team">Already register team</string>
+    <string name="signup2_join_team_2">Join team</string>
+    <string name="signup3_information_input">Information input</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="next">Next</string>
+    <string name="position">Position</string>
+    <string name="player_no">Player No.</string>
+    <string name="pitcher">Pitcher</string>
+    <string name="hitter">Hitter</string>
+    <string name="right">Right</string>
+    <string name="left">Left</string>
 </resources>

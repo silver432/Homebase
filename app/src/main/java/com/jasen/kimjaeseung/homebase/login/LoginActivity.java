@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private static final int RC_SIGN_IN = 9001;
+    public static boolean isRegister = false;
 
     private CallbackManager mCallbackManager;
 
@@ -205,7 +206,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Log.d(TAG,"signInWithEmail:success");
-                    goToMain();
+                    if (!isRegister) goToRegister();
+                    else goToMain();
                 } else {
                     Log.w(TAG,"signInWithEmail:failure",task.getException());
                     ToastUtils.showToast(getApplicationContext(),getString(R.string.login_failure_msg));
@@ -227,8 +229,8 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success
                             Log.d(TAG, "signInWithCredential:success");
-
-                            goToMain();
+                            if (!isRegister) goToRegister();
+                            else goToMain();
                         } else {
                             // Sign in fail
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -251,8 +253,8 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success
                             Log.d(TAG, "signInWithCredential:success");
-
-                            goToMain();
+                            if (!isRegister) goToRegister();
+                            else goToMain();
 
                         } else {
                             // Sign in fail
@@ -263,6 +265,13 @@ public class LoginActivity extends AppCompatActivity {
                         ProgressUtils.dismiss();
                     }
                 });
+    }
+
+    private void goToRegister(){
+        final Intent intent = new Intent(this, SignUpActivity2.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        finish();
     }
 
     protected void goToMain() {

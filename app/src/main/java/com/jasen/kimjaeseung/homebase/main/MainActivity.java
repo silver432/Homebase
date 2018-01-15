@@ -72,9 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     Log.d(TAG,"signed in : "+user.getUid());
-                    for (String s: mAuth.getCurrentUser().getProviders()){
-                        Log.d(TAG,s);
-                    }
 
                 } else {
                     goToLogin();

@@ -49,6 +49,9 @@ public class BaseTextWatcher implements TextWatcher {
             case R.id.signup_til_email:
                 signUpValidateEmail();
                 break;
+            case R.id.signup_til_password:
+                signUpValidatePassword();
+                break;
             case R.id.signup_til_password_confirm:
                 signUpValidatePasswordConfirm();
                 break;
@@ -56,6 +59,12 @@ public class BaseTextWatcher implements TextWatcher {
                 signUpValidateName();
                 break;
             case R.id.signup_til_birth:
+                signUpValidateBirth();
+                break;
+            case R.id.signup3_til_name:
+                signUpValidateName();
+                break;
+            case R.id.signup3_til_birth:
                 signUpValidateBirth();
                 break;
         }
@@ -112,6 +121,15 @@ public class BaseTextWatcher implements TextWatcher {
             textInputLayout.setError(context.getString(R.string.signup_birth_err_msg));
             textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }else validate();
+    }
+
+    private void signUpValidatePassword(){
+        String password = textInputEditText.getText().toString();
+
+        if (password.isEmpty()||password.length()<6){
+            textInputLayout.setError(context.getString(R.string.signup_password_err_msg2));
+            textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        } else validate();
     }
 
     private boolean isValidateBirth(String birth){

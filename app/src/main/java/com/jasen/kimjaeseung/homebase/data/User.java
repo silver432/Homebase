@@ -9,17 +9,16 @@ public class User {
     private String name;
     private String birth;
     private String email;
-    private String phone;
     private String image;
 
-    public User(){}
+    public User() {
+    }
 
-    public User(String provider, String name, String birth, String email, String phone, String image) {
+    public User(String provider, String name, String birth, String email, String image) {
         this.provider = provider;
         this.name = name;
         this.birth = birth;
         this.email = email;
-        this.phone = phone;
         this.image = image;
     }
 
@@ -55,13 +54,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public String getImage() {
         return image;

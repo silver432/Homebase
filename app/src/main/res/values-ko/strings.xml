@@ -23,4 +23,20 @@
     <string name="signup_name_err_msg">이름을 2~10자 이내로 입력해 주세요</string>
     <string name="signup_birth_err_msg">생년월일을 YYYY.MM.dd 형식으로 입력해 주세요</string>
     <string name="signup_user_collision">이미 가입한 사용자입니다</string>
+    <string name="signup_password_err_msg2">6자이상 입력해 주세요</string>
+    <string name="signup2_complete">Homebase에 오신것을 환영합니다!</string>
+    <string name="signup2_register_team">아직 팀이 등록되지 않았다면</string>
+    <string name="signup2_register_team_2">팀 등록하기</string>
+    <string name="signup2_join_team">이미 팀이 등록되어 있다면</string>
+    <string name="signup2_join_team_2">팀 참가하기</string>
+    <string name="signup3_information_input">정보입력</string>
+    <string name="height">신장</string>
+    <string name="weight">체중</string>
+    <string name="next">다음</string>
+    <string name="position">포지션</string>
+    <string name="player_no">선수번호</string>
+    <string name="pitcher">투수</string>
+    <string name="hitter">타자</string>
+    <string name="right">우</string>
+    <string name="left">좌</string>
 </resources>

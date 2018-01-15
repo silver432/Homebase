@@ -73,6 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void init() {
         emailEditText.addTextChangedListener(new BaseTextWatcher(this, emailTextInputLayout, emailEditText, null));
+        passwordEditText.addTextChangedListener(new BaseTextWatcher(this,passwordTextInputLayout,passwordEditText,null));
         passwordConfirmEditText.addTextChangedListener(new BaseTextWatcher(this, passwordTextInputLayoutConfirm, passwordConfirmEditText, passwordEditText));
         nameEditText.addTextChangedListener(new BaseTextWatcher(this, nameTextInputLayout, nameEditText, null));
         birthEditText.addTextChangedListener(new BaseTextWatcher(this, birthTextInputLayout, birthEditText, null));
@@ -134,7 +135,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void addUserToDB(String name, String email, String birth) {
         String provider = mAuth.getCurrentUser().getProviders().get(0);
-        User user = new User(provider, name, birth, email, null, null);
+        User user = new User(provider, name, birth, email, null);
 
         DatabaseReference databaseReference = mDatabase.getReference("users");
         databaseReference.push().setValue(user);

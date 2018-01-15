@@ -30,6 +30,7 @@
                 android:id="@+id/login_et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/hint_size"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress" />
 
@@ -45,6 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="26dp"
+                android:textSize="@dimen/hint_size"
                 android:hint="@string/password"
                 android:inputType="textPassword" />
 
@@ -70,6 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="46dp"
+                android:padding="3dp"
                 android:text="@string/sign_up"
                 android:textSize="12sp" />
 
@@ -77,6 +80,7 @@
                 android:id="@+id/login_tv_find_email_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="3dp"
                 android:layout_marginStart="62dp"
                 android:text="@string/find_email_password"
                 android:textSize="12sp" />
@@ -87,7 +91,7 @@
             android:id="@+id/login_btn_google"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="54dp"
+            android:layout_marginTop="51dp"
             android:background="@drawable/radius_button_google"
             android:drawableStart="@drawable/google_logo"
             android:paddingStart="16dp"
