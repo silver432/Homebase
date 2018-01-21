@@ -2,11 +2,13 @@ package com.jasen.kimjaeseung.homebase.util;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabItem;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 
 import com.jasen.kimjaeseung.homebase.R;
@@ -67,6 +69,15 @@ public class BaseTextWatcher implements TextWatcher {
             case R.id.signup3_til_birth:
                 signUpValidateBirth();
                 break;
+            case R.id.signup3_til_height:
+                signUpValidateHeight();
+                break;
+            case R.id.signup3_til_weight:
+                signUpValidateWeight();
+                break;
+            case R.id.signup4_til_no:
+                signUpValidateNo();
+                break;
         }
     }
 
@@ -111,29 +122,37 @@ public class BaseTextWatcher implements TextWatcher {
     }
 
     private boolean isValidateName(String name) {
-        return name.length()>=2 && name.length()<=10;
+        return name.length() >= 2 && name.length() <= 10;
     }
 
     private void signUpValidateBirth() {
         String birth = textInputEditText.getText().toString();
 
-        if (birth.isEmpty()||!isValidateBirth(birth)){
+        if (birth.isEmpty() || !isValidateBirth(birth)) {
             textInputLayout.setError(context.getString(R.string.signup_birth_err_msg));
             textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        }else validate();
+        } else {
+            String[] datas = birth.split("\\.");
+            int month = Integer.parseInt(datas[1]);
+            int day = Integer.parseInt(datas[2]);
+            if (month < 1 || month > 12 || day < 1 || day > 31) {
+                textInputLayout.setError(context.getString(R.string.signup_birth_err_msg2));
+                textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            } else validate();
+        }
     }
 
-    private void signUpValidatePassword(){
+    private void signUpValidatePassword() {
         String password = textInputEditText.getText().toString();
 
-        if (password.isEmpty()||password.length()<6){
+        if (password.isEmpty() || password.length() < 6) {
             textInputLayout.setError(context.getString(R.string.signup_password_err_msg2));
             textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         } else validate();
     }
 
-    private boolean isValidateBirth(String birth){
-        return birth.matches("^\\d{4}.\\d{2}.\\d{2}$");
+    private boolean isValidateBirth(String birth) {
+        return birth.matches(RegularExpressionUtils.birth);
     }
 
     private boolean isValidEmail(String email) {
@@ -143,5 +162,45 @@ public class BaseTextWatcher implements TextWatcher {
     private void validate() {
         textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.signup_valid_symbol, 0);
         textInputLayout.setErrorEnabled(false);
+    }
+
+    private void signUpValidateHeight(){
+        String height = textInputEditText.getText().toString();
+
+        if (height.isEmpty()||!height.matches(RegularExpressionUtils.doubleRegex)){
+            textInputLayout.setError(context.getString(R.string.please_input_number));
+            textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }else {
+            double hDouble = Double.parseDouble(height);
+            if (hDouble<0||hDouble>300){
+                textInputLayout.setError(context.getString(R.string.signup_height_err_msg));
+                textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            } else validate();
+        }
+
+    }
+
+    private void signUpValidateWeight(){
+        String weight = textInputEditText.getText().toString();
+
+        if (weight.isEmpty()||!weight.matches(RegularExpressionUtils.doubleRegex)){
+            textInputLayout.setError(context.getString(R.string.please_input_number));
+            textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }else {
+            double wDouble = Double.parseDouble(weight);
+            if (wDouble<0||wDouble>300){
+                textInputLayout.setError(context.getString(R.string.signup_weight_err_msg));
+                textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            } else validate();
+        }
+    }
+
+    private void signUpValidateNo(){
+        String no = textInputEditText.getText().toString();
+
+        if (no.isEmpty()||!no.matches(RegularExpressionUtils.intRegex)){
+            textInputLayout.setError(context.getString(R.string.please_input_number));
+            textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }else validate();
     }
 }

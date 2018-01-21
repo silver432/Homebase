@@ -39,4 +39,9 @@
     <string name="hitter">타자</string>
     <string name="right">우</string>
     <string name="left">좌</string>
+    <string name="signup_birth_err_msg2">정확한 생년월일을 입력해 주세요</string>
+    <string name="signup_height_err_msg">정확한 신장을 입력해 주세요</string>
+    <string name="signup_weight_err_msg">정확한 체중을 입력해 주세요</string>
+    <string name="please_input_number">숫자를 입력해 주세요</string>
+    <string name="signup4_no_err_msg">선수번호에 숫자를 입력해 주세요</string>
 </resources>

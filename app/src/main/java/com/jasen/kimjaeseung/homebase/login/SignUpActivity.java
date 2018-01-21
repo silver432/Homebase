@@ -24,6 +24,7 @@ import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.User;
 import com.jasen.kimjaeseung.homebase.main.MainActivity;
 import com.jasen.kimjaeseung.homebase.util.BaseTextWatcher;
+import com.jasen.kimjaeseung.homebase.util.RegularExpressionUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
 
 import butterknife.BindView;
@@ -73,7 +74,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void init() {
         emailEditText.addTextChangedListener(new BaseTextWatcher(this, emailTextInputLayout, emailEditText, null));
-        passwordEditText.addTextChangedListener(new BaseTextWatcher(this,passwordTextInputLayout,passwordEditText,null));
+        passwordEditText.addTextChangedListener(new BaseTextWatcher(this, passwordTextInputLayout, passwordEditText, null));
         passwordConfirmEditText.addTextChangedListener(new BaseTextWatcher(this, passwordTextInputLayoutConfirm, passwordConfirmEditText, passwordEditText));
         nameEditText.addTextChangedListener(new BaseTextWatcher(this, nameTextInputLayout, nameEditText, null));
         birthEditText.addTextChangedListener(new BaseTextWatcher(this, birthTextInputLayout, birthEditText, null));
@@ -104,11 +105,29 @@ public class SignUpActivity extends AppCompatActivity {
         if (email.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty() || name.isEmpty() || birth.isEmpty()) {
             ToastUtils.showToast(this, getString(R.string.login_failure));
             return;
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            ToastUtils.showToast(this, getString(R.string.login_email_err_msg));
+            return;
+        } else if (password.length() < 6) {
+            ToastUtils.showToast(this, getString(R.string.signup_password_err_msg2));
+            return;
         } else if (!password.equals(passwordConfirm)) {
             ToastUtils.showToast(this, getString(R.string.signup_password_err_msg));
             return;
         } else if (!(name.length() >= 2 && name.length() <= 10)) {
             ToastUtils.showToast(this, getString(R.string.signup_name_err_msg));
+            return;
+        } else if (!birth.matches(RegularExpressionUtils.birth)) {
+            ToastUtils.showToast(this, getString(R.string.signup_birth_err_msg));
+            return;
+        } else if(birth.matches(RegularExpressionUtils.birth)){
+            String[] datas = birth.split("\\.");
+            int month = Integer.parseInt(datas[1]);
+            int day = Integer.parseInt(datas[2]);
+            if (month<1||month>12||day<1||day>31){
+                ToastUtils.showToast(this, getString(R.string.signup_birth_err_msg2));
+                return;
+            }
         }
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

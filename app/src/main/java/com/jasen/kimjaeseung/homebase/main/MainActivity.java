@@ -14,9 +14,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.login.LoginActivity;
+import com.jasen.kimjaeseung.homebase.login.SignUpActivity2;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.jasen.kimjaeseung.homebase.login.LoginActivity.isRegister;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     Log.d(TAG,"signed in : "+user.getUid());
+                    if (!isRegister) goToRegister();
 
                 } else {
                     goToLogin();
@@ -82,6 +86,13 @@ public class MainActivity extends AppCompatActivity {
 
     protected void goToLogin() {
         final Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goToRegister(){
+        final Intent intent = new Intent(this, SignUpActivity2.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         finish();

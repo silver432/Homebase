@@ -41,4 +41,9 @@
     <string name="hitter">Hitter</string>
     <string name="right">Right</string>
     <string name="left">Left</string>
+    <string name="signup_birth_err_msg2">Please fill right date of birth</string>
+    <string name="signup_height_err_msg">Please fill right height</string>
+    <string name="signup_weight_err_msg">Please fill right weight</string>
+    <string name="please_input_number">Please enter number</string>
+    <string name="signup4_no_err_msg">Please enter number in No.</string>
 </resources>
