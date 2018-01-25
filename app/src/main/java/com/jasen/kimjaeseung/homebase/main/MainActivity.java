@@ -55,26 +55,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
     }
 
     @OnClick({R.id.main_btn_sign_out})
-    public void mOnClick(View view){
-        switch (view.getId()){
+    public void mOnClick(View view) {
+        switch (view.getId()) {
             case R.id.main_btn_sign_out:
                 signOut();
                 break;
         }
     }
 
-    private void init(){
+    private void init() {
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    Log.d(TAG,"signed in : "+user.getUid());
+                    Log.d(TAG, "signed in : " + user.getUid());
+
                     if (!isRegister) goToRegister();
 
                 } else {
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    private void goToRegister(){
+    private void goToRegister() {
         final Intent intent = new Intent(this, SignUpActivity2.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);

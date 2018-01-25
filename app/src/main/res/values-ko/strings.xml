@@ -44,4 +44,7 @@
     <string name="signup_weight_err_msg">정확한 체중을 입력해 주세요</string>
     <string name="please_input_number">숫자를 입력해 주세요</string>
     <string name="signup4_no_err_msg">선수번호에 숫자를 입력해 주세요</string>
+    <string name="dialog_choose_select">찾으실 정보를 선택해 주세요</string>
+    <string name="find_email">이메일 찾기</string>
+    <string name="find_password">비밀번호 찾기</string>
 </resources>

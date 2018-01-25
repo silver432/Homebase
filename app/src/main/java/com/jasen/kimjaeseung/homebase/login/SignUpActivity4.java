@@ -139,16 +139,17 @@ public class SignUpActivity4 extends AppCompatActivity {
 
         DatabaseReference databaseReference = mDatabase.getReference("users");
 
-        if (provider.contains("google") || provider.contains("facebook")) {
+        if (provider.contains(getString(R.string.facebook)) || provider.contains(getString(R.string.google))) {
             User user = new User(provider, name, birth, email, null);
-            databaseReference.push().setValue(user);
+            databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user);
         }
 
         databaseReference = mDatabase.getReference("players");
 
         Player player = new Player(name, null, position,Integer.parseInt(no), dHeight, dWeight,hitter,pitcher,new SimpleDateFormat("yyyy.MM.dd").format(new Date()),null );
-        databaseReference.push().setValue(player);
+        databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(player);
 
+        //confirm register
         LoginActivity.isRegister = true;
     }
 

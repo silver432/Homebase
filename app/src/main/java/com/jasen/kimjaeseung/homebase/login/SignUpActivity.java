@@ -157,7 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
         User user = new User(provider, name, birth, email, null);
 
         DatabaseReference databaseReference = mDatabase.getReference("users");
-        databaseReference.push().setValue(user);
+        databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user);
     }
 
     protected void goToLogin() {

@@ -6,9 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,16 +38,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.jasen.kimjaeseung.homebase.R;
+import com.jasen.kimjaeseung.homebase.data.Player;
 import com.jasen.kimjaeseung.homebase.main.MainActivity;
+import com.jasen.kimjaeseung.homebase.network.CloudService;
 import com.jasen.kimjaeseung.homebase.util.BaseTextWatcher;
 import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
 
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by kimjaeseung on 2018. 1. 3..
@@ -66,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
     private static final int RC_SIGN_IN = 9001;
     public static boolean isRegister = false;
 
@@ -121,11 +133,10 @@ public class LoginActivity extends AppCompatActivity {
         initFacebookSignIn();
 
         //add textwatcher to edittext
-        signInEmailEditText.addTextChangedListener(new BaseTextWatcher(this,signInEmailLayout,signInEmailEditText,null));
-        signInPasswordEditText.addTextChangedListener(new BaseTextWatcher(this,signInPasswordLayout,signInPasswordEditText,null));
+        signInEmailEditText.addTextChangedListener(new BaseTextWatcher(this, signInEmailLayout, signInEmailEditText, null));
+        signInPasswordEditText.addTextChangedListener(new BaseTextWatcher(this, signInPasswordLayout, signInPasswordEditText, null));
 
         mAuth = FirebaseAuth.getInstance();
-
     }
 
     //Init Google sign in
@@ -166,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.login_btn_google,R.id.login_tv_sign_up,R.id.login_btn_login})
+    @OnClick({R.id.login_btn_google, R.id.login_tv_sign_up, R.id.login_btn_login, R.id.login_tv_find_email_password})
     public void mOnClick(View view) {
         switch (view.getId()) {
             case R.id.login_btn_google:
@@ -178,6 +189,9 @@ public class LoginActivity extends AppCompatActivity {
             case R.id.login_btn_login:
                 emailSignIn();
                 break;
+            case R.id.login_tv_find_email_password:
+                chooseFindEmailPassword();
+                break;
         }
     }
 
@@ -186,31 +200,31 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    private void goToSignUp(){
+    private void goToSignUp() {
         final Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void emailSignIn(){
+    private void emailSignIn() {
         String email = signInEmailEditText.getText().toString();
         String password = signInPasswordEditText.getText().toString();
 
-        if (email.isEmpty()||password.isEmpty()) {
-            ToastUtils.showToast(this,getString(R.string.login_warning));
+        if (email.isEmpty() || password.isEmpty()) {
+            ToastUtils.showToast(this, getString(R.string.login_warning));
             return;
         }
 
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    Log.d(TAG,"signInWithEmail:success");
-                    if (!isRegister) goToRegister();
-                    else goToMain();
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "signInWithEmail:success");
+
+                    checkFirstLogin();
                 } else {
-                    Log.w(TAG,"signInWithEmail:failure",task.getException());
-                    ToastUtils.showToast(getApplicationContext(),getString(R.string.login_failure_msg));
+                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                    ToastUtils.showToast(getApplicationContext(), getString(R.string.login_failure_msg));
                 }
             }
         });
@@ -229,8 +243,8 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success
                             Log.d(TAG, "signInWithCredential:success");
-                            if (!isRegister) goToRegister();
-                            else goToMain();
+
+                            checkFirstLogin();
                         } else {
                             // Sign in fail
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -253,12 +267,11 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success
                             Log.d(TAG, "signInWithCredential:success");
-                            if (!isRegister) goToRegister();
-                            else goToMain();
 
+                            checkFirstLogin();
                         } else {
                             // Sign in fail
-                            ToastUtils.showToast(getApplicationContext(),getString(R.string.login_failure_msg));
+                            ToastUtils.showToast(getApplicationContext(), getString(R.string.login_failure_msg));
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                         }
 
@@ -267,7 +280,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void goToRegister(){
+    private void goToRegister() {
         final Intent intent = new Intent(this, SignUpActivity2.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
@@ -279,5 +292,69 @@ public class LoginActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         finish();
+    }
+
+    private void checkFirstLogin() {
+        mUser = mAuth.getCurrentUser();
+
+        CloudService service = CloudService.retrofit.create(CloudService.class);
+        Call<Player> call = service.callPlayer(mUser.getUid());
+
+        call.enqueue(new Callback<Player>() {
+            @Override
+            public void onResponse(Call<Player> call, Response<Player> response) {
+                if (!response.isSuccessful()) {
+                    //db에 player 정보 없음
+                    goToRegister();
+                    isRegister = false;
+                    return;
+                }
+                //player 불러오기 성공
+                goToMain();
+                isRegister = true;
+            }
+
+            @Override
+            public void onFailure(Call<Player> call, Throwable t) {
+                //네트워크 에러
+                Log.d(TAG, "onResponseFailed: " + call.request().url());
+            }
+        });
+    }
+
+    private void chooseFindEmailPassword() {
+        final AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+        final View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.dialog_choose_email_password, null);
+        alertDialog.setView(view);
+        alertDialog.show();
+
+        Button exit = (Button) alertDialog.findViewById(R.id.dialog_choose_btn_exit);
+        Button findEmail = (Button) alertDialog.findViewById(R.id.dialog_choose_btn_email);
+        Button findPassword = (Button) alertDialog.findViewById(R.id.dialog_choose_btn_password);
+
+        if (exit != null)
+            exit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+
+        if (findEmail != null)
+            findEmail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+        if (findEmail != null)
+            findEmail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
     }
 }

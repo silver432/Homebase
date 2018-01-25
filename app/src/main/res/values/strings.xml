@@ -46,4 +46,10 @@
     <string name="signup_weight_err_msg">Please fill right weight</string>
     <string name="please_input_number">Please enter number</string>
     <string name="signup4_no_err_msg">Please enter number in No.</string>
+    <string name="google">google</string>
+    <string name="facebook">facebook</string>
+    <string name="password_email">password</string>
+    <string name="dialog_choose_select">Please select the information you want to find</string>
+    <string name="find_email">Find Email</string>
+    <string name="find_password">Find Password</string>
 </resources>

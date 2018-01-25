@@ -9,7 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.jasen.kimjaeseung.homebase.R;
+import com.jasen.kimjaeseung.homebase.data.User;
+import com.jasen.kimjaeseung.homebase.network.CloudService;
 import com.jasen.kimjaeseung.homebase.util.BaseTextWatcher;
 import com.jasen.kimjaeseung.homebase.util.RegularExpressionUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
@@ -17,6 +20,9 @@ import com.jasen.kimjaeseung.homebase.util.ToastUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by kimjaeseung on 2018. 1. 15..
@@ -42,7 +48,9 @@ public class SignUpActivity3 extends AppCompatActivity {
     @BindView(R.id.signup3_et_weight)
     TextInputEditText weightEditText;
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,15 +65,38 @@ public class SignUpActivity3 extends AppCompatActivity {
     private void init() {
         mAuth = FirebaseAuth.getInstance();
 
-
-        //이메일 로그인시 이름과 생년월일 가져오기
-
-
         nameEditText.addTextChangedListener(new BaseTextWatcher(this, nameTextInputLayout, nameEditText, null));
         birthEditText.addTextChangedListener(new BaseTextWatcher(this, birthTextInputLayout, birthEditText, null));
         heightEditText.addTextChangedListener(new BaseTextWatcher(this, heightTextInputLayout, heightEditText, null));
         weightEditText.addTextChangedListener(new BaseTextWatcher(this, weightTextInputLayout, weightEditText, null));
 
+        //이메일 로그인시 이름과 생년월일 가져오기
+        mUser = mAuth.getCurrentUser();
+        String provider = mUser.getProviders().get(0);
+
+        if (provider.contains(getString(R.string.password_email))){
+            CloudService service = CloudService.retrofit.create(CloudService.class);
+            Call<User> call = service.callUser(mUser.getUid());
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (!response.isSuccessful()){
+                        //user 없음
+                        return;
+                    }
+                    User user = response.body();
+                    if (user!=null){
+                        nameEditText.setText(user.getName());
+                        birthEditText.setText(user.getBirth());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    //네트워크에러
+                }
+            });
+        }
     }
 
     @OnClick({R.id.signup3_btn_back, R.id.signup3_btn_next})

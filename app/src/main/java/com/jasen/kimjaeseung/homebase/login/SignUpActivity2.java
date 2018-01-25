@@ -36,6 +36,7 @@ public class SignUpActivity2 extends AppCompatActivity {
     public void mOnClick(View view) {
         switch (view.getId()) {
             case R.id.signup2_btn_register_team:
+                //이후 수정
                 goToSignUp3();
                 break;
             case R.id.signup2_btn_join_team:

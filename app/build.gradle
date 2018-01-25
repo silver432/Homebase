@@ -42,6 +42,12 @@ dependencies {
     // Android design
     compile 'com.android.support:design:26.1.0'
 
+    //Retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+
+    //GsonConvertFactory
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+
 }
 
 
