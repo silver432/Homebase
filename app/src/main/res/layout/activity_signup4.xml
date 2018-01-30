@@ -33,29 +33,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/signup4_til_position"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="30dp"
-                android:textColorHint="#ffffff">
+            <TextView
+                android:id="@+id/signup4_tv_position"
+                android:layout_marginStart="35dp"
+                android:text="@string/position"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/hint_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/signup4_et_position"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/position"
-                    android:inputType="text"
-                    android:textColor="@color/colorSky"
-                    android:textSize="@dimen/hint_size" />
-            </android.support.design.widget.TextInputLayout>
+            <Spinner
+                android:id="@+id/signup4_sp_position"
+                android:layout_below="@id/signup4_tv_position"
+                android:layout_marginEnd="25dp"
+                android:layout_marginStart="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/signup4_til_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/signup4_til_position"
+                android:layout_below="@id/signup4_sp_position"
                 android:layout_marginEnd="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="40dp"

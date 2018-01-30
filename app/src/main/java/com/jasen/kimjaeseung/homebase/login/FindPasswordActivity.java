@@ -17,13 +17,27 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.jasen.kimjaeseung.homebase.R;
+import com.jasen.kimjaeseung.homebase.data.PostEmailByName;
+import com.jasen.kimjaeseung.homebase.data.PostRequestEmail;
+import com.jasen.kimjaeseung.homebase.network.CloudService;
 import com.jasen.kimjaeseung.homebase.util.BaseTextWatcher;
+import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.RegularExpressionUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by kimjaeseung on 2018. 1. 26..
@@ -91,6 +105,8 @@ public class FindPasswordActivity extends AppCompatActivity {
 
         if (checkData(name, email)) return;
 
+        checkEmailByName(name,email);
+
         mAuth.sendPasswordResetEmail(email)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -117,6 +133,38 @@ public class FindPasswordActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private void checkEmailByName(String name,String email){
+        ProgressUtils.show(this, R.string.loading);
+
+        CloudService service = CloudService.retrofit.create(CloudService.class);
+        Call<String> call = service.checkEmailByName(new PostEmailByName(name,email));
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (!response.isSuccessful()) {
+                    //이름과 이메일 매칭 실패
+                    ProgressUtils.dismiss();
+
+                    Log.d(TAG, "retrieve fail");
+                    ToastUtils.showToast(FindPasswordActivity.this, getString(R.string.find_password_match_fail));
+                    return;
+                }
+
+                //이름과 이메일 매칭
+                ProgressUtils.dismiss();
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                ProgressUtils.dismiss();
+
+                //네트워크 에러
+                Log.d(TAG, "onResponseFailed: " + call.request().url() + " " + t.getMessage());
+            }
+        });
     }
 
 

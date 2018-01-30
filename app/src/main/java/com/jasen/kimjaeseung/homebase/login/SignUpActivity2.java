@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.jasen.kimjaeseung.homebase.R;
@@ -24,6 +25,8 @@ public class SignUpActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_signup2);
 
         ButterKnife.bind(this);
+
+        Log.d(TAG,"onCreate");
 
         init();
     }

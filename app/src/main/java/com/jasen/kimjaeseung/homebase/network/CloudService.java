@@ -1,6 +1,7 @@
 package com.jasen.kimjaeseung.homebase.network;
 
 import com.jasen.kimjaeseung.homebase.data.Player;
+import com.jasen.kimjaeseung.homebase.data.PostEmailByName;
 import com.jasen.kimjaeseung.homebase.data.PostRequestEmail;
 import com.jasen.kimjaeseung.homebase.data.User;
 
@@ -40,4 +41,8 @@ public interface CloudService {
     @Headers("Content-Type: application/json")
     @POST("findEmail")
     Call<String> findEmail(@Body PostRequestEmail postRequestEmail);
+
+    @Headers("Content-Type: application/json")
+    @POST("checkEmailByName")
+    Call<String> checkEmailByName(@Body PostEmailByName postEmailByName);
 }

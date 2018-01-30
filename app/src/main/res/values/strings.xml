@@ -14,7 +14,7 @@
     <string name="facebook_login">Login with Facebook</string>
     <string name="login_warning">Please enter email/password</string>
     <string name="login_failure">Please fill in blank</string>
-    <string name="login_failure_msg">Login failed. Please check email/password</string>
+    <string name="login_failure_msg">Please check email/password</string>
     <string name="signup_confirm">Confirm</string>
     <string name="login_email_err_msg">Please check your Email</string>
     <string name="signup_password_err_msg">Please check your Password</string>
@@ -58,4 +58,21 @@
     <string name="send_email">A password change email is sent </string>
     <string name="send_email2">to the e-mail address you set.</string>
     <string name="send_email_confirm">Sent you an email</string>
+    <string-array name="array_position">
+        <item>Starting Pitcher</item>
+        <item>Middle relief pitcher</item>
+        <item>Closing Pitcher</item>
+        <item>Catcher</item>
+        <item>First baseman</item>
+        <item>Second baseman</item>
+        <item>Third baseman</item>
+        <item>Shortstop</item>
+        <item>Left fielder</item>
+        <item>Center fielder</item>
+        <item>Right fielder</item>
+        <item>Designated hitter</item>
+    </string-array>
+    <string name="find_password_match_fail">Name and Email is not correct</string>
+    <string name="check">Check</string>
+    <string name="goto_signup">Go to Sign Up</string>
 </resources>

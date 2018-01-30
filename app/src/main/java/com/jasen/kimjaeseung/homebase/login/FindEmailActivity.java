@@ -5,19 +5,27 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.PostRequestEmail;
 import com.jasen.kimjaeseung.homebase.network.CloudService;
 import com.jasen.kimjaeseung.homebase.util.BaseTextWatcher;
+import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.RegularExpressionUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,35 +87,60 @@ public class FindEmailActivity extends AppCompatActivity {
     }
 
     private void goToFindEmail2() {
+        ProgressUtils.show(this, R.string.loading);
+
         String name = nameEditText.getText().toString();
         String birth = birthEditText.getText().toString();
 
         if (checkData(name, birth)) return;
 
         CloudService service = CloudService.retrofit.create(CloudService.class);
-        Call<String> call = service.findEmail(new PostRequestEmail(name,birth));
+        Call<String> call = service.findEmail(new PostRequestEmail(name, birth));
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if (!response.isSuccessful()){
-                    Log.d(TAG,"retrieve fail");
-                    ToastUtils.showToast(FindEmailActivity.this,getString(R.string.find_emaill_fail));
+                if (!response.isSuccessful()) {
+                    //이메일 찾기실패
+                    ProgressUtils.dismiss();
+
+                    Log.d(TAG, "retrieve fail");
+//                    ToastUtils.showToast(FindEmailActivity.this, getString(R.string.find_emaill_fail));
+                    findEmailFail();
+
                     return;
                 }
 
-                String mEmail = response.body();
+                //이메일 찾기 성공
+                ProgressUtils.dismiss();
 
-                final Intent intent = new Intent(FindEmailActivity.this, FindEmailActivity2.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("email",mEmail);
-                startActivity(intent);
-                finish();
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body());
+                    JSONArray jsonArray = jsonObject.getJSONArray("emails");
+                    List<String> arrEmail = new ArrayList<>();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        arrEmail.add(jsonArray.getString(i));
+                    }
+
+                    String[] emails = arrEmail.toArray(new String[arrEmail.size()]);
+
+                    final Intent intent = new Intent(FindEmailActivity.this, FindEmailActivity2.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    intent.putExtra("emails", emails);
+                    startActivity(intent);
+                    finish();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+                ProgressUtils.dismiss();
+
                 //네트워크 에러
-                Log.d(TAG, "onResponseFailed: " + call.request().url()+" "+t.getMessage());
+                Log.d(TAG, "onResponseFailed: " + call.request().url() + " " + t.getMessage());
             }
         });
 
@@ -135,5 +168,38 @@ public class FindEmailActivity extends AppCompatActivity {
         return false;
     }
 
+    private void findEmailFail(){
+        final AlertDialog alertDialog = new AlertDialog.Builder(FindEmailActivity.this).create();
+        final View view = LayoutInflater.from(FindEmailActivity.this).inflate(R.layout.dialog_find_email_fail, null);
+        alertDialog.setView(view);
+        alertDialog.show();
+
+        Button check = (Button) alertDialog.findViewById(R.id.dialog_find_email_btn_check);
+        Button btnGoToSignUp = (Button) alertDialog.findViewById(R.id.dialog_find_email_btn_goto_signup);
+
+        if (check != null)
+            check.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+
+        if (btnGoToSignUp!= null)
+            btnGoToSignUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                    goToSignUp();
+                }
+            });
+    }
+
+    private void goToSignUp() {
+        final Intent intent = new Intent(this, SignUpActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        finish();
+    }
 
 }

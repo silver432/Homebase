@@ -2,14 +2,22 @@ package com.jasen.kimjaeseung.homebase.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jasen.kimjaeseung.homebase.R;
@@ -17,6 +25,7 @@ import com.jasen.kimjaeseung.homebase.data.Player;
 import com.jasen.kimjaeseung.homebase.data.User;
 import com.jasen.kimjaeseung.homebase.main.MainActivity;
 import com.jasen.kimjaeseung.homebase.util.BaseTextWatcher;
+import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.RegularExpressionUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
 
@@ -33,10 +42,8 @@ import butterknife.OnClick;
 
 public class SignUpActivity4 extends AppCompatActivity {
     private static final String TAG = SignUpActivity4.class.getSimpleName();
-    @BindView(R.id.signup4_til_position)
-    TextInputLayout positionTextInputLayout;
-    @BindView(R.id.signup4_et_position)
-    TextInputEditText positionEditText;
+    @BindView(R.id.signup4_sp_position)
+    Spinner positionSpinner;
     @BindView(R.id.signup4_til_no)
     TextInputLayout noTextInputLayout;
     @BindView(R.id.signup4_et_no)
@@ -67,8 +74,17 @@ public class SignUpActivity4 extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
 
+        initSpinner();
+
         noEditText.addTextChangedListener(new BaseTextWatcher(this, noTextInputLayout, noEditText, null));
 
+    }
+
+    private void initSpinner(){
+        String[] arrPosition = getResources().getStringArray(R.array.array_position);
+        ArrayAdapter<String> adapter =  new ArrayAdapter<String>(this, R.layout.spinner_position,arrPosition);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        positionSpinner.setAdapter(adapter);
     }
 
     @OnClick({R.id.signup4_btn_back, R.id.signup4_btn_finish, R.id.signup4_cb_pitcher_left, R.id.signup4_cb_pitcher_right, R.id.signup4_cb_hitter_left, R.id.signup4_cb_hitter_right})
@@ -80,7 +96,6 @@ public class SignUpActivity4 extends AppCompatActivity {
             case R.id.signup4_btn_finish:
                 if (checkData()) return;
                 addUserToDB();
-                goToMain();
                 break;
             case R.id.signup4_cb_pitcher_left:
                 if (prCheckBox.isChecked()) prCheckBox.setChecked(false);
@@ -105,7 +120,7 @@ public class SignUpActivity4 extends AppCompatActivity {
     }
 
     private boolean checkData() {
-        String position = positionEditText.getText().toString();
+        String position = positionSpinner.getSelectedItem().toString();
         String no = noEditText.getText().toString();
         boolean isPitcherChecked = plCheckBox.isChecked() || prCheckBox.isChecked();
         boolean isHitterChecked = hlCheckBox.isChecked() || hrCheckBox.isChecked();
@@ -121,12 +136,15 @@ public class SignUpActivity4 extends AppCompatActivity {
     }
 
     private void addUserToDB() {
+
+        ProgressUtils.show(this,R.string.loading);
+
         String name = getIntent().getStringExtra("name");
         String birth = getIntent().getStringExtra("birth");
         String email = mAuth.getCurrentUser().getEmail();
         String provider = mAuth.getCurrentUser().getProviders().get(0);
 
-        String position = positionEditText.getText().toString();
+        String position = positionSpinner.getSelectedItem().toString();
         String no = noEditText.getText().toString();
         String height = getIntent().getStringExtra("height");
         String weight = getIntent().getStringExtra("weight");
@@ -147,10 +165,16 @@ public class SignUpActivity4 extends AppCompatActivity {
         databaseReference = mDatabase.getReference("players");
 
         Player player = new Player(name, null, position,Integer.parseInt(no), dHeight, dWeight,hitter,pitcher,new SimpleDateFormat("yyyy.MM.dd").format(new Date()),null );
-        databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(player);
+        databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(player, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
-        //confirm register
-        LoginActivity.isRegister = true;
+                ProgressUtils.dismiss();
+
+                goToMain();
+            }
+        });
+
     }
 
     protected void goToMain() {

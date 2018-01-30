@@ -39,8 +39,12 @@ public class FindEmailActivity2 extends AppCompatActivity {
     }
 
     private void initView() {
-        String email = getIntent().getStringExtra("email");
-        emailTextView.setText(email);
+        String allEmails = "";
+        String emails[] = getIntent().getStringArrayExtra("emails");
+        for (String email : emails) {
+            allEmails += email + "\n";
+        }
+        emailTextView.setText(allEmails);
     }
 
     @OnClick({R.id.find_email2_btn_goto_login, R.id.find_email2_btn_find_password})

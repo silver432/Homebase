@@ -6,6 +6,7 @@ package com.jasen.kimjaeseung.homebase.util;
 
 public class RegularExpressionUtils {
     public static String birth = "^\\d{4}.\\d{2}.\\d{2}$";
+    public static String birth2 = "^\\d{4}\\d{2}\\d{2}$";
     public static String doubleRegex = "[+-]?([0-9]*[.])?[0-9]+";
     public static String intRegex = "^\\d+$";
 }

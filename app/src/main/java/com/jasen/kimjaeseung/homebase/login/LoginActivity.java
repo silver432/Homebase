@@ -79,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private static final int RC_SIGN_IN = 9001;
-    public static boolean isRegister = false;
 
     private CallbackManager mCallbackManager;
 
@@ -89,6 +88,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
+
+        Log.d(TAG,"onCreate");
 
         init();
     }
@@ -224,7 +225,8 @@ public class LoginActivity extends AppCompatActivity {
                     checkFirstLogin();
                 } else {
                     Log.w(TAG, "signInWithEmail:failure", task.getException());
-                    ToastUtils.showToast(getApplicationContext(), getString(R.string.login_failure_msg));
+//                    ToastUtils.showToast(getApplicationContext(), getString(R.string.login_failure_msg));
+                    loginFail();
                 }
             }
         });
@@ -319,12 +321,10 @@ public class LoginActivity extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     //db에 player 정보 없음
                     goToRegister();
-                    isRegister = false;
                     return;
                 }
                 //player 불러오기 성공
                 goToMain();
-                isRegister = true;
             }
 
             @Override
@@ -370,6 +370,22 @@ public class LoginActivity extends AppCompatActivity {
                     goToFindPassword();
                 }
             });
+    }
 
+    private void loginFail(){
+        final AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+        final View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.dialog_login_fail, null);
+        alertDialog.setView(view);
+        alertDialog.show();
+
+        Button check = (Button) alertDialog.findViewById(R.id.dialog_login_btn_check);
+
+        if (check != null)
+            check.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
     }
 }

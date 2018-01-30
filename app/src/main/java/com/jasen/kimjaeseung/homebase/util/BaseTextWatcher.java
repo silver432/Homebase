@@ -140,6 +140,11 @@ public class BaseTextWatcher implements TextWatcher {
     private void signUpValidateBirth() {
         String birth = textInputEditText.getText().toString();
 
+        if (birth.matches(RegularExpressionUtils.birth2)){
+            birth = birth.replaceAll("(\\d{4})(\\d{2})(\\d{2})","$1.$2.$3");
+            textInputEditText.setText(birth);
+        }
+
         if (birth.isEmpty() || !isValidateBirth(birth)) {
             textInputLayout.setError(context.getString(R.string.signup_birth_err_msg));
             textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);

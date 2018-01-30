@@ -24,6 +24,7 @@ import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.User;
 import com.jasen.kimjaeseung.homebase.main.MainActivity;
 import com.jasen.kimjaeseung.homebase.util.BaseTextWatcher;
+import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.RegularExpressionUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
 
@@ -153,11 +154,15 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void addUserToDB(String name, String email, String birth) {
+        ProgressUtils.show(this,R.string.loading);
+
         String provider = mAuth.getCurrentUser().getProviders().get(0);
         User user = new User(provider, name, birth, email, null);
 
         DatabaseReference databaseReference = mDatabase.getReference("users");
         databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user);
+
+        ProgressUtils.dismiss();
     }
 
     protected void goToLogin() {
