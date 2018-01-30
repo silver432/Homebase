@@ -78,6 +78,18 @@ public class BaseTextWatcher implements TextWatcher {
             case R.id.signup4_til_no:
                 signUpValidateNo();
                 break;
+            case R.id.find_email_til_name:
+                signUpValidateName();
+                break;
+            case R.id.find_email_til_birth:
+                signUpValidateBirth();
+                break;
+            case R.id.find_password_til_name:
+                signUpValidateName();
+                break;
+            case R.id.find_password_til_email:
+                signUpValidateEmail();
+                break;
         }
     }
 

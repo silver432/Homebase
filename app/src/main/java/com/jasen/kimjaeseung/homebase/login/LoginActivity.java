@@ -289,6 +289,19 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void goToMain() {
         final Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goToFindEmail() {
+        final Intent intent = new Intent(this, FindEmailActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goToFindPassword() {
+        final Intent intent = new Intent(this, FindPasswordActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         finish();
@@ -344,15 +357,17 @@ public class LoginActivity extends AppCompatActivity {
             findEmail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    alertDialog.dismiss();
+                    goToFindEmail();
                 }
             });
 
-        if (findEmail != null)
-            findEmail.setOnClickListener(new View.OnClickListener() {
+        if (findPassword != null)
+            findPassword.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    alertDialog.dismiss();
+                    goToFindPassword();
                 }
             });
 

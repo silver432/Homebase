@@ -12,36 +12,55 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".splash.SplashActivity" android:theme="@style/SplashTheme" android:screenOrientation="portrait">
+        <activity
+            android:name=".splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".login.LoginActivity" android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+        <activity
+            android:name=".main.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <activity android:name=".login.SignUpActivity" android:theme="@style/AppTheme.SignUpTheme" android:screenOrientation="portrait"/>
-        <activity android:name=".login.SignUpActivity2" android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
-        <activity android:name=".login.SignUpActivity3" android:theme="@style/AppTheme.SignUpTheme" android:screenOrientation="portrait"/>
-        <activity android:name=".login.SignUpActivity4" android:theme="@style/AppTheme.SignUpTheme" android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".login.SignUpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SignUpTheme" />
+        <activity
+            android:name=".login.SignUpActivity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.SignUpActivity3"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SignUpTheme" />
+        <activity
+            android:name=".login.SignUpActivity4"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SignUpTheme" />
+        <activity
+            android:name=".login.FindEmailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SignUpTheme" />
+        <activity
+            android:name=".login.FindEmailActivity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.FindPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SignUpTheme" />
+        <activity
+            android:name=".login.FindPasswordActivity2"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

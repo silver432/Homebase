@@ -52,4 +52,10 @@
     <string name="dialog_choose_select">Please select the information you want to find</string>
     <string name="find_email">Find Email</string>
     <string name="find_password">Find Password</string>
+    <string name="find_emaill_fail">Cannot find email</string>
+    <string name="registered_email">Registered Email</string>
+    <string name="goto_login">Go To Login</string>
+    <string name="send_email">A password change email is sent </string>
+    <string name="send_email2">to the e-mail address you set.</string>
+    <string name="send_email_confirm">Sent you an email</string>
 </resources>
