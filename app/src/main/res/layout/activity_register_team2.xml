@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/theme_background"
+    android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/register_team2_iv_logo"
+        android:layout_width="138dp"
+        android:layout_height="108dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="22dp"
+        android:layout_marginTop="72dp"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/register_team2_tv_finish"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="34dp"
+        android:text="@string/register_team_complete"
+        android:textSize="20sp"
+        android:textColor="#2c2c2c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="47dp"
+        android:paddingTop="14dp"
+        android:paddingStart="45dp"
+        android:paddingEnd="45dp"
+        android:paddingBottom="14dp"
+        android:background="@drawable/radius_ll_team_register"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="14sp"
+            android:textColor="#2c2c2c"
+            android:text="@string/team_code"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/register_team2_tv_team_code"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="#2c2c2c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/register_team2_btn_copy"
+            android:layout_gravity="bottom|center_horizontal"
+            android:textSize="12sp"
+            android:background="@drawable/radius_copy_button"
+            android:textColor="#2c2c2c"
+            android:text="@string/copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <Button
+        android:id="@+id/register_team2_btn_finish"
+        android:text="@string/signup_confirm"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/radius_button_login"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</android.support.v7.widget.LinearLayoutCompat>

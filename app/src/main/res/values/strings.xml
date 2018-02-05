@@ -75,4 +75,25 @@
     <string name="find_password_match_fail">Name and Email is not correct</string>
     <string name="check">Check</string>
     <string name="goto_signup">Go to Sign Up</string>
+    <string name="register_team">Register Team</string>
+    <string name="team_name">Team Name</string>
+    <string name="team_introduction">Team Intro(Within 50 characters)</string>
+    <string name="team_intro_hint">We are the strongest in the universe, the home baseball team. Bring it all up!</string>
+    <string name="homeground">Homeground Name</string>
+    <string name="register_team_name_err_msg">Please enter in less than 25 characters</string>
+    <string name="register_team_intro_err_msg">Please enter in less than 50 characters</string>
+    <string name="register_team_logo_err_msg">Please insert Team Logo</string>
+    <string name="register_team_name_err_msg2">Please enter right Team Name</string>
+    <string name="register_team_intro_err_msg2">Please enter right Team Intro</string>
+    <string name="register_team_home_err_msg">Please enter right Homeground Name</string>
+    <string name="register_team_complete">Team registration has been completed</string>
+    <string name="team_code">Team Code</string>
+    <string name="copy">Copy</string>
+    <string name="copy_complete">Copy Completed</string>
+    <string name="enter_team_code">Enter code of team to participate in</string>
+    <string name="team_code_explanation">* Team code refers to the number and English code generated at the time of first team registration.</string>
+    <string name="please_enter_team_code">Please enter team code</string>
+    <string name="code_not_exist">This code does not exist</string>
+    <string name="enter_team_question">Join this team?</string>
+    <string name="cancel">Cancel</string>
 </resources>

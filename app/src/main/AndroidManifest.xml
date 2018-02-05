@@ -61,6 +61,17 @@
         <activity
             android:name=".login.FindPasswordActivity2"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.RegisterTeamActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SignUpTheme" />
+        <activity
+            android:name=".login.RegisterTeamActivity2"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".login.EnterTeamActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

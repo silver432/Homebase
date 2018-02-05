@@ -71,4 +71,25 @@
     <string name="find_password_match_fail">해당하는 이름과 이메일이 없습니다</string>
     <string name="check">확인</string>
     <string name="goto_signup">회원가입하기</string>
+    <string name="register_team">팀 등록</string>
+    <string name="team_name">팀 이름</string>
+    <string name="team_introduction">팀 소개(50자 이내)</string>
+    <string name="team_intro_hint">우리는 우주 최강 사회인 야구팀, 홈베이스이다. 다 덤벼라 얍!</string>
+    <string name="homeground">홈구장 이름</string>
+    <string name="register_team_name_err_msg">25자 이내로 입력해 주세요</string>
+    <string name="register_team_intro_err_msg">50자 이내로 입력해 주세요</string>
+    <string name="register_team_logo_err_msg">팀 로고를 등록해 주세요</string>
+    <string name="register_team_name_err_msg2">정확한 팀 이름을 입력해 주세요</string>
+    <string name="register_team_intro_err_msg2">정확한 팀 소개를 입력해 주세요</string>
+    <string name="register_team_home_err_msg">정확한 홈구장 이름을 입력해 주세요</string>
+    <string name="register_team_complete">팀 등록이 완료되었습니다</string>
+    <string name="team_code">팀 코드</string>
+    <string name="copy">복사하기</string>
+    <string name="copy_complete">복사 완료</string>
+    <string name="enter_team_code">참가하실 팀의 코드를 입력해주세요</string>
+    <string name="team_code_explanation">* 팀 코드란 처음 팀 등록시에 생성된 숫자, 영문 코드를 말합니다.</string>
+    <string name="please_enter_team_code">팀 코드를 입력해 주세요</string>
+    <string name="code_not_exist">존재하지 않는 코드입니다</string>
+    <string name="enter_team_question">이 팀에 입장하시겠습니까</string>
+    <string name="cancel">취소</string>
 </resources>

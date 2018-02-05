@@ -90,6 +90,12 @@ public class BaseTextWatcher implements TextWatcher {
             case R.id.find_password_til_email:
                 signUpValidateEmail();
                 break;
+            case R.id.register_team_til_team_name:
+                registerTeamValidateName();
+                break;
+            case R.id.register_team_til_homeground:
+                registerTeamValidateName();
+                break;
         }
     }
 
@@ -219,5 +225,15 @@ public class BaseTextWatcher implements TextWatcher {
             textInputLayout.setError(context.getString(R.string.please_input_number));
             textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }else validate();
+    }
+
+    private void registerTeamValidateName(){
+        String name = textInputEditText.getText().toString();
+
+        if (name.isEmpty()||name.length()>25){
+            textInputLayout.setError(context.getString(R.string.register_team_name_err_msg));
+            textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        } else validate();
+
     }
 }

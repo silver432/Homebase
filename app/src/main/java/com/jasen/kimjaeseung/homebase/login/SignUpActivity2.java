@@ -26,7 +26,7 @@ public class SignUpActivity2 extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        Log.d(TAG,"onCreate");
+        Log.d(TAG, "onCreate");
 
         init();
     }
@@ -39,17 +39,22 @@ public class SignUpActivity2 extends AppCompatActivity {
     public void mOnClick(View view) {
         switch (view.getId()) {
             case R.id.signup2_btn_register_team:
-                //이후 수정
-                goToSignUp3();
+                goToRegisterTeam();
                 break;
             case R.id.signup2_btn_join_team:
-
+                goToEnterTeam();
                 break;
         }
     }
 
-    private void goToSignUp3() {
-        final Intent intent = new Intent(this, SignUpActivity3.class);
+    private void goToEnterTeam() {
+        final Intent intent = new Intent(this, EnterTeamActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goToRegisterTeam() {
+        final Intent intent = new Intent(this, RegisterTeamActivity.class);
         startActivity(intent);
         finish();
     }

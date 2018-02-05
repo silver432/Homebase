@@ -87,12 +87,12 @@ public class FindEmailActivity extends AppCompatActivity {
     }
 
     private void goToFindEmail2() {
-        ProgressUtils.show(this, R.string.loading);
-
         String name = nameEditText.getText().toString();
         String birth = birthEditText.getText().toString();
 
         if (checkData(name, birth)) return;
+
+        ProgressUtils.show(this, R.string.loading);
 
         CloudService service = CloudService.retrofit.create(CloudService.class);
         Call<String> call = service.findEmail(new PostRequestEmail(name, birth));

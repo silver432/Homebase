@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2c2c2c">
+
+    <Button
+        android:id="@+id/register_team_btn_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/back" />
+
+    <TextView
+        android:id="@+id/register_team_tv_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:text="@string/register_team"
+        android:textColor="#ffffff"
+        android:textSize="19sp" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/register_team_btn_confirm"
+        android:layout_below="@id/register_team_tv_register"
+        android:layout_marginTop="40dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/register_team_fl"
+                android:layout_width="97dp"
+                android:layout_height="97dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle_background">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/register_team_civ_team_logo"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/register_team_iv_team_logo"
+                    android:layout_width="30dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/camera_icon" />
+
+            </FrameLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/register_team_til_team_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/register_team_fl"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:textColorHint="#ffffff">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/register_team_et_team_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/team_name"
+                    android:inputType="text"
+                    android:textColor="@color/colorSky"
+                    android:textSize="@dimen/hint_size" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/register_team_tv_team_intro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/register_team_til_team_name"
+                android:layout_marginStart="33dp"
+                android:layout_marginTop="33dp"
+                android:text="@string/team_introduction"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/hint_size" />
+
+            <EditText
+                android:id="@+id/register_team_et_team_intro"
+                android:layout_width="match_parent"
+                android:layout_height="97dp"
+                android:layout_below="@id/register_team_tv_team_intro"
+                android:layout_marginEnd="33dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/radius_button_team_intro"
+                android:hint="@string/team_intro_hint"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="@dimen/hint_size" />
+
+            <TextView
+                android:id="@+id/register_team_tv_intro_err_msg"
+                android:layout_below="@id/register_team_et_team_intro"
+                android:layout_marginTop="3dp"
+                android:visibility="invisible"
+                android:layout_marginStart="30dp"
+                android:textSize="@dimen/hint_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/register_team_til_homeground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/register_team_tv_intro_err_msg"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="37dp"
+                android:textColorHint="#ffffff">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/register_team_et_homeground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/homeground"
+                    android:inputType="text"
+                    android:textColor="@color/colorSky"
+                    android:textSize="@dimen/hint_size" />
+            </android.support.design.widget.TextInputLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/register_team_btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#4b4b4b"
+        android:text="@string/signup_confirm"
+        android:textColor="#fffffd"
+        android:textSize="17sp" />
+</RelativeLayout>

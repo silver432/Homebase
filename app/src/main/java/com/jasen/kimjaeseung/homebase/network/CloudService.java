@@ -3,6 +3,7 @@ package com.jasen.kimjaeseung.homebase.network;
 import com.jasen.kimjaeseung.homebase.data.Player;
 import com.jasen.kimjaeseung.homebase.data.PostEmailByName;
 import com.jasen.kimjaeseung.homebase.data.PostRequestEmail;
+import com.jasen.kimjaeseung.homebase.data.Team;
 import com.jasen.kimjaeseung.homebase.data.User;
 
 import org.json.JSONObject;
@@ -45,4 +46,7 @@ public interface CloudService {
     @Headers("Content-Type: application/json")
     @POST("checkEmailByName")
     Call<String> checkEmailByName(@Body PostEmailByName postEmailByName);
+
+    @GET("getTeam")
+    Call<Team> callTeam(@Query("teamCode")String teamCode);
 }

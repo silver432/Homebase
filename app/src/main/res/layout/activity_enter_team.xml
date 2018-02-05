@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/theme_background"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/enter_team_iv_logo"
+        android:layout_width="138dp"
+        android:layout_height="108dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="22dp"
+        android:layout_marginTop="72dp"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/enter_team_tv_input"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="9dp"
+        android:text="@string/enter_team_code"
+        android:textSize="20sp"
+        android:textColor="#2c2c2c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textSize="@dimen/hint_size"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="#2c2c2c"
+        android:text="@string/team_code_explanation"
+        android:layout_marginBottom="58dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <EditText
+        android:id="@+id/enter_team_et_team_code"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="@string/team_code"
+        android:layout_marginBottom="61dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:src="@drawable/find_email2_arrow"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="39dp"
+        android:layout_width="28dp"
+        android:layout_height="14dp" />
+
+    <Button
+        android:id="@+id/enter_team_btn_finish"
+        android:text="@string/signup_confirm"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/radius_button_login"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</android.support.v7.widget.LinearLayoutCompat>

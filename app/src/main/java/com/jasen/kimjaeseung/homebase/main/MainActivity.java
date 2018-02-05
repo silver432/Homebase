@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     Log.d(TAG, "signed in : " + user.getUid());
 
+                    //이후 global app으로이동
                     checkRegister(user);
 
                 } else {
