@@ -158,7 +158,7 @@ public class SignUpActivity4 extends AppCompatActivity {
         DatabaseReference databaseReference = mDatabase.getReference("users");
 
         if (provider.contains(getString(R.string.facebook)) || provider.contains(getString(R.string.google))) {
-            User user = new User(provider, name, birth, email, null);
+            User user = new User(provider, name, birth, email, null,true);
             databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user);
         }
 

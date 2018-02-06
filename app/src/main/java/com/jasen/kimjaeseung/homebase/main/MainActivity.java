@@ -42,26 +42,6 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     @OnClick({R.id.main_btn_sign_out})
     public void mOnClick(View view) {
         switch (view.getId()) {
@@ -73,21 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    Log.d(TAG, "signed in : " + user.getUid());
 
-                    //이후 global app으로이동
-                    checkRegister(user);
-
-                } else {
-                    goToLogin();
-                }
-            }
-        };
     }
 
     protected void goToLogin() {
@@ -104,35 +70,13 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    private void checkRegister(FirebaseUser mUser) {
-        CloudService service = CloudService.retrofit.create(CloudService.class);
-        Call<Player> call = service.callPlayer(mUser.getUid());
-
-        call.enqueue(new Callback<Player>() {
-            @Override
-            public void onResponse(Call<Player> call, Response<Player> response) {
-                if (!response.isSuccessful()) {
-                    //db에 player 정보 없음
-                    goToRegister();
-                    return;
-                }
-                //player 불러오기 성공
-
-            }
-
-            @Override
-            public void onFailure(Call<Player> call, Throwable t) {
-                //네트워크 에러
-                Log.d(TAG, "onResponseFailed: " + call.request().url());
-            }
-        });
-
-    }
-
     private void signOut() {
         // Firebase sign out
         mAuth.signOut();
 
         LoginManager.getInstance().logOut();
+
+        //로그아웃은 이후 수정
+        goToLogin();
     }
 }

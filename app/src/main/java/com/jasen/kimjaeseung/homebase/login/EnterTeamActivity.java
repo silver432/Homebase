@@ -25,6 +25,7 @@ import com.google.firebase.storage.StorageReference;
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.PostEmailByName;
 import com.jasen.kimjaeseung.homebase.data.Team;
+import com.jasen.kimjaeseung.homebase.data.User;
 import com.jasen.kimjaeseung.homebase.network.CloudService;
 import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
@@ -151,6 +152,19 @@ public class EnterTeamActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     DatabaseReference databaseReference = mDatabase.getReference("teams").child(teamCode);
                     databaseReference.child("members").push().setValue(mAuth.getCurrentUser().getUid());
+
+                    String provider = mAuth.getCurrentUser().getProviders().get(0);
+
+                    DatabaseReference databaseReference1 = mDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
+
+                    if (provider.contains("password")){
+                        //email
+                        databaseReference1.child("hasTeam").setValue(true);
+                    }else {
+                        //google,facebook
+                        User user = new User(null,null,null,null,null,true);
+                        databaseReference1.setValue(user);
+                    }
 
                     goToSignUp3();
                 }

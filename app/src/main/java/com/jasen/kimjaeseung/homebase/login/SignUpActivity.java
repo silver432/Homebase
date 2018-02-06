@@ -157,7 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
         ProgressUtils.show(this,R.string.loading);
 
         String provider = mAuth.getCurrentUser().getProviders().get(0);
-        User user = new User(provider, name, birth, email, null);
+        User user = new User(provider, name, birth, email, null,false);
 
         DatabaseReference databaseReference = mDatabase.getReference("users");
         databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user);

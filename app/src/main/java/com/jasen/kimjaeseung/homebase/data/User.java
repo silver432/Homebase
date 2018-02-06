@@ -10,16 +10,18 @@ public class User {
     private String birth;
     private String email;
     private String image;
+    private boolean hasTeam;
 
     public User() {
     }
 
-    public User(String provider, String name, String birth, String email, String image) {
+    public User(String provider, String name, String birth, String email, String image, boolean hasTeam) {
         this.provider = provider;
         this.name = name;
         this.birth = birth;
         this.email = email;
         this.image = image;
+        this.hasTeam = hasTeam;
     }
 
     public String getProvider() {
@@ -54,12 +56,19 @@ public class User {
         this.email = email;
     }
 
-
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public boolean isHasTeam() {
+        return hasTeam;
+    }
+
+    public void setHasTeam(boolean hasTeam) {
+        this.hasTeam = hasTeam;
     }
 }

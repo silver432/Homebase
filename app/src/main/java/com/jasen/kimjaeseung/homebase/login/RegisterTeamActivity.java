@@ -34,6 +34,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.Team;
+import com.jasen.kimjaeseung.homebase.data.User;
 import com.jasen.kimjaeseung.homebase.util.BaseTextWatcher;
 import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
@@ -188,6 +189,20 @@ public class RegisterTeamActivity extends AppCompatActivity {
 
         ProgressUtils.show(this,R.string.loading);
 
+        String provider = mAuth.getCurrentUser().getProviders().get(0);
+
+        // user db
+        DatabaseReference databaseReference1 = mDataBase.getReference("users").child(mAuth.getCurrentUser().getUid());
+        if (provider.contains("password")){
+            //email
+            databaseReference1.child("hasTeam").setValue(true);
+        }else {
+            //google,facebook
+            User user = new User(null,null,null,null,null,true);
+            databaseReference1.setValue(user);
+        }
+
+        // team db
         DatabaseReference databaseReference = mDataBase.getReference("teams");
         teamKey = databaseReference.push().getKey();
         Team team = new Team(teamName,teamKey+"/teamLogo",teamIntro,homeGround);
