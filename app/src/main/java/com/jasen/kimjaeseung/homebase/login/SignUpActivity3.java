@@ -99,23 +99,13 @@ public class SignUpActivity3 extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.signup3_btn_back, R.id.signup3_btn_next})
+    @OnClick({R.id.signup3_btn_next})
     public void mOnClick(View view) {
         switch (view.getId()) {
-            case R.id.signup3_btn_back:
-                goToSignUp2();
-                break;
             case R.id.signup3_btn_next:
                 goToSignUp4();
                 break;
         }
-    }
-
-    private void goToSignUp2() {
-        final Intent intent = new Intent(this, SignUpActivity2.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
-        finish();
     }
 
     private void goToSignUp4() {

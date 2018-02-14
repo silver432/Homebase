@@ -159,10 +159,10 @@ public class EnterTeamActivity extends AppCompatActivity {
 
                     if (provider.contains("password")){
                         //email
-                        databaseReference1.child("hasTeam").setValue(true);
+                        databaseReference1.child("teamCode").setValue(teamCode);
                     }else {
                         //google,facebook
-                        User user = new User(null,null,null,null,null,true);
+                        User user = new User(null,null,null,null,null,teamCode);
                         databaseReference1.setValue(user);
                     }
 

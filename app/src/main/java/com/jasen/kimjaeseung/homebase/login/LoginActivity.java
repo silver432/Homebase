@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        Log.d(TAG,"onCreate");
+        Log.d(TAG, "onCreate");
 
         init();
     }
@@ -216,6 +216,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        ProgressUtils.show(this, R.string.loading);
+
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -225,9 +227,10 @@ public class LoginActivity extends AppCompatActivity {
                     checkFirstLogin();
                 } else {
                     Log.w(TAG, "signInWithEmail:failure", task.getException());
-//                    ToastUtils.showToast(getApplicationContext(), getString(R.string.login_failure_msg));
                     loginFail();
                 }
+
+                ProgressUtils.dismiss();
             }
         });
     }
@@ -372,7 +375,7 @@ public class LoginActivity extends AppCompatActivity {
             });
     }
 
-    private void loginFail(){
+    private void loginFail() {
         final AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
         final View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.dialog_login_fail, null);
         alertDialog.setView(view);

@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
         LoginManager.getInstance().logOut();
 
-        //로그아웃은 이후 수정
         goToLogin();
     }
 }

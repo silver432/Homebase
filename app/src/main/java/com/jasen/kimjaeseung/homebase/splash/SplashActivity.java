@@ -86,7 +86,8 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 //user 불러오기 성공
                 User user = response.body();
-                if (user.isHasTeam()) {
+                if (!user.getTeamCode().equals("default")) {
+                    //유저가 팀에 가입된 경우
                     CloudService service2 = CloudService.retrofit.create(CloudService.class);
                     Call<Player> call2 = service2.callPlayer(mUser.getUid());
                     call2.enqueue(new Callback<Player>() {

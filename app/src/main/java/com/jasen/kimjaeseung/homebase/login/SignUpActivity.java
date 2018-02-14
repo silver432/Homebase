@@ -131,9 +131,12 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
 
+        ProgressUtils.show(this,R.string.loading);
+
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                ProgressUtils.dismiss();
                 if (task.isSuccessful()) {
                     ToastUtils.showToast(getApplicationContext(), getString(R.string.signup_success));
 
@@ -157,7 +160,7 @@ public class SignUpActivity extends AppCompatActivity {
         ProgressUtils.show(this,R.string.loading);
 
         String provider = mAuth.getCurrentUser().getProviders().get(0);
-        User user = new User(provider, name, birth, email, null,false);
+        User user = new User(provider, name, birth, email, null,"default");
 
         DatabaseReference databaseReference = mDatabase.getReference("users");
         databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user);

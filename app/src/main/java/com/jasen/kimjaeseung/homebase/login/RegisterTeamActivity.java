@@ -191,17 +191,6 @@ public class RegisterTeamActivity extends AppCompatActivity {
 
         String provider = mAuth.getCurrentUser().getProviders().get(0);
 
-        // user db
-        DatabaseReference databaseReference1 = mDataBase.getReference("users").child(mAuth.getCurrentUser().getUid());
-        if (provider.contains("password")){
-            //email
-            databaseReference1.child("hasTeam").setValue(true);
-        }else {
-            //google,facebook
-            User user = new User(null,null,null,null,null,true);
-            databaseReference1.setValue(user);
-        }
-
         // team db
         DatabaseReference databaseReference = mDataBase.getReference("teams");
         teamKey = databaseReference.push().getKey();
@@ -209,6 +198,17 @@ public class RegisterTeamActivity extends AppCompatActivity {
         databaseReference.child(teamKey).setValue(team);
         databaseReference.child(teamKey).child("admins").push().setValue(mAuth.getCurrentUser().getUid());
         databaseReference.child(teamKey).child("members").push().setValue(mAuth.getCurrentUser().getUid());
+
+        // user db
+        DatabaseReference databaseReference1 = mDataBase.getReference("users").child(mAuth.getCurrentUser().getUid());
+        if (provider.contains("password")){
+            //email
+            databaseReference1.child("teamCode").setValue(teamKey);
+        }else {
+            //google,facebook
+            User user = new User(null,null,null,null,null,teamKey);
+            databaseReference1.setValue(user);
+        }
 
         StorageReference storageRef = mStorage.getReference(teamKey+"/teamLogo");
 
