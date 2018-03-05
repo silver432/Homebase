@@ -96,4 +96,6 @@
     <string name="code_not_exist">This code does not exist</string>
     <string name="enter_team_question">Join this team?</string>
     <string name="cancel">Cancel</string>
+    <string name="send_signup_email">We sent you a confirmation email</string>
+    <string name="verify_email">please verify your email</string>
 </resources>

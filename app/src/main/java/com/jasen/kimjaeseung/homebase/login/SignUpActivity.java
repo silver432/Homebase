@@ -138,7 +138,16 @@ public class SignUpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 ProgressUtils.dismiss();
                 if (task.isSuccessful()) {
-                    ToastUtils.showToast(getApplicationContext(), getString(R.string.signup_success));
+                    FirebaseUser user = task.getResult().getUser();
+
+                    user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                ToastUtils.showToast(getApplicationContext(), getString(R.string.send_signup_email));
+                            }
+                        }
+                    });
 
                     addUserToDB(name, email, birth);
 
@@ -163,7 +172,13 @@ public class SignUpActivity extends AppCompatActivity {
         User user = new User(provider, name, birth, email, null,"default");
 
         DatabaseReference databaseReference = mDatabase.getReference("users");
-        databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user);
+        databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                // logout(prevent auto login after sign up)
+                mAuth.signOut();
+            }
+        });
 
         ProgressUtils.dismiss();
     }

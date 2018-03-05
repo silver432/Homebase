@@ -70,10 +70,6 @@ public class RegisterTeamActivity extends AppCompatActivity {
     TextInputEditText nameEditText;
     @BindView(R.id.register_team_et_team_intro)
     EditText introEditText;
-    @BindView(R.id.register_team_til_homeground)
-    TextInputLayout homeTextInputLayout;
-    @BindView(R.id.register_team_et_homeground)
-    TextInputEditText homeEditText;
     @BindView(R.id.register_team_tv_intro_err_msg)
     TextView introErrorMsg;
 
@@ -116,7 +112,6 @@ public class RegisterTeamActivity extends AppCompatActivity {
 
     private void init() {
         nameEditText.addTextChangedListener(new BaseTextWatcher(this, nameTextInputLayout, nameEditText, null));
-        homeEditText.addTextChangedListener(new BaseTextWatcher(this, homeTextInputLayout, homeEditText, null));
         introEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -183,9 +178,8 @@ public class RegisterTeamActivity extends AppCompatActivity {
     private void registerTeam() {
         String teamName = nameEditText.getText().toString();
         String teamIntro = introEditText.getText().toString();
-        String homeGround = homeEditText.getText().toString();
 
-        if (checkData(teamName, teamIntro, homeGround)) return;
+        if (checkData(teamName, teamIntro)) return;
 
         ProgressUtils.show(this,R.string.loading);
 
@@ -194,9 +188,9 @@ public class RegisterTeamActivity extends AppCompatActivity {
         // team db
         DatabaseReference databaseReference = mDataBase.getReference("teams");
         teamKey = databaseReference.push().getKey();
-        Team team = new Team(teamName,teamKey+"/teamLogo",teamIntro,homeGround);
+        Team team = new Team(teamName,teamKey+"/teamLogo",teamIntro);
         databaseReference.child(teamKey).setValue(team);
-        databaseReference.child(teamKey).child("admins").push().setValue(mAuth.getCurrentUser().getUid());
+        databaseReference.child(teamKey).child("admin").setValue(mAuth.getCurrentUser().getUid());
         databaseReference.child(teamKey).child("members").push().setValue(mAuth.getCurrentUser().getUid());
 
         // user db
@@ -237,7 +231,7 @@ public class RegisterTeamActivity extends AppCompatActivity {
 
     }
 
-    private boolean checkData(String teamName, String teamIntro, String homeGround) {
+    private boolean checkData(String teamName, String teamIntro) {
         if (teamLogo.getVisibility() == View.VISIBLE) {
             ToastUtils.showToast(this, getString(R.string.register_team_logo_err_msg));
             return true;
@@ -246,9 +240,6 @@ public class RegisterTeamActivity extends AppCompatActivity {
             return true;
         } else if (teamIntro.length() > 50) {
             ToastUtils.showToast(this, getString(R.string.register_team_intro_err_msg2));
-            return true;
-        } else if (homeGround.isEmpty() || homeGround.length() > 25) {
-            ToastUtils.showToast(this, getString(R.string.register_team_home_err_msg));
             return true;
         }
 

@@ -224,6 +224,15 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "signInWithEmail:success");
 
+                    mUser = task.getResult().getUser();
+
+                    //not verified email
+                    if (!mUser.isEmailVerified()){
+                        ProgressUtils.dismiss();
+                        ToastUtils.showToast(getApplicationContext(),getString(R.string.verify_email));
+                        return;
+                    }
+
                     checkFirstLogin();
                 } else {
                     Log.w(TAG, "signInWithEmail:failure", task.getException());

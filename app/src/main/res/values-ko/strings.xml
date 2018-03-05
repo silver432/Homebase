@@ -92,4 +92,6 @@
     <string name="code_not_exist">존재하지 않는 코드입니다</string>
     <string name="enter_team_question">이 팀에 입장하시겠습니까</string>
     <string name="cancel">취소</string>
+    <string name="send_signup_email">가입인증 이메일을 보냈습니다</string>
+    <string name="verify_email">이메일 가입인증을 해주세요</string>
 </resources>

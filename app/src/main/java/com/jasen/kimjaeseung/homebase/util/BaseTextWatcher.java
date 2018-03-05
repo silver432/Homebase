@@ -93,9 +93,6 @@ public class BaseTextWatcher implements TextWatcher {
             case R.id.register_team_til_team_name:
                 registerTeamValidateName();
                 break;
-            case R.id.register_team_til_homeground:
-                registerTeamValidateName();
-                break;
         }
     }
 

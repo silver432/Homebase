@@ -10,13 +10,11 @@ public class Team {
     private String name;
     private String logo;
     private String description;
-    private String homeStadium;
 
-    public Team(String name, String logo, String description, String homeStadium) {
+    public Team(String name, String logo, String description) {
         this.name = name;
         this.logo = logo;
         this.description = description;
-        this.homeStadium = homeStadium;
     }
 
     public String getName() {
@@ -41,14 +39,6 @@ public class Team {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getHomeStadium() {
-        return homeStadium;
-    }
-
-    public void setHomeStadium(String homeStadium) {
-        this.homeStadium = homeStadium;
     }
 
 }
