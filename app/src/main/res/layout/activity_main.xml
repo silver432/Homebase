@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.jasen.kimjaeseung.homebase.main.MainActivity">
 
-    <Button
-        android:id="@+id/main_btn_sign_out"
-        android:text="Sign Out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <FrameLayout
+        android:id="@+id/main_vp_container"
+        android:layout_above="@id/main_bnv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        />
 
-</android.support.v7.widget.LinearLayoutCompat>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/main_bnv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemBackground="@color/colorBlack"
+        app:itemIconTint="@drawable/bnv_item_selector"
+        app:itemTextColor="@drawable/bnv_item_selector"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/menu_main"/>
+
+</RelativeLayout>

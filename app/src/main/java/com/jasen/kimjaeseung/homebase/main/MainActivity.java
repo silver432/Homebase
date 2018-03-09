@@ -2,9 +2,14 @@ package com.jasen.kimjaeseung.homebase.main;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,10 +19,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.Player;
+import com.jasen.kimjaeseung.homebase.home.HomeFragment;
 import com.jasen.kimjaeseung.homebase.login.LoginActivity;
 import com.jasen.kimjaeseung.homebase.login.SignUpActivity2;
 import com.jasen.kimjaeseung.homebase.network.CloudService;
+import com.jasen.kimjaeseung.homebase.personal.PersonalFragment;
+import com.jasen.kimjaeseung.homebase.schedule.ScheduleFragment;
+import com.jasen.kimjaeseung.homebase.team.TeamFragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -28,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser mUser;
+
+    @BindView(R.id.main_bnv)
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,23 +50,45 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        Log.d(TAG, "onCreate");
-
         init();
-    }
-
-    @OnClick({R.id.main_btn_sign_out})
-    public void mOnClick(View view) {
-        switch (view.getId()) {
-            case R.id.main_btn_sign_out:
-                signOut();
-                break;
-        }
     }
 
     private void init() {
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
+        if (mUser==null) goToLogin();
+
+        //first fragment
+        switchFragment(HomeFragment.getInstance());
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.menu_main_main:
+                        switchFragment(HomeFragment.getInstance());
+                        return true;
+                    case R.id.menu_main_schedule:
+                        switchFragment(ScheduleFragment.getInstance());
+                        return true;
+                    case R.id.menu_main_team:
+                        switchFragment(TeamFragment.getInstance());
+                        return true;
+                    case R.id.menu_main_personal:
+                        switchFragment(PersonalFragment.getInstance());
+                        return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+    private void switchFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_vp_container, fragment);
+        transaction.commit();
     }
 
     protected void goToLogin() {
@@ -63,19 +98,5 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    private void goToRegister() {
-        final Intent intent = new Intent(this, SignUpActivity2.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
-        finish();
-    }
 
-    private void signOut() {
-        // Firebase sign out
-        mAuth.signOut();
-
-        LoginManager.getInstance().logOut();
-
-        goToLogin();
-    }
 }

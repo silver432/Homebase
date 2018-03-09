@@ -7,4 +7,5 @@
     <color name="colorSky">#00b4df</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorRed">	#FF0000</color>
+    <color name="colorBlack">#2c2c2c</color>
 </resources>

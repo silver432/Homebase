@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_main_main"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/main_icon"
+        android:title="@string/main"/>
+    <item
+        android:id="@+id/menu_main_schedule"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/schedule_icon"
+        android:title="@string/schedule"/>
+    <item
+        android:id="@+id/menu_main_team"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/team_icon"
+        android:title="@string/team"/>
+    <item
+        android:id="@+id/menu_main_personal"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/personal_icon"
+        android:title="@string/personal"/>
+</menu>

@@ -98,4 +98,22 @@
     <string name="cancel">Cancel</string>
     <string name="send_signup_email">We sent you a confirmation email</string>
     <string name="verify_email">please verify your email</string>
+    <string name="main">Main</string>
+    <string name="schedule">Schedule</string>
+    <string name="team">Team</string>
+    <string name="personal">Personal</string>
+    <string name="next_match">Next\n Match</string>
+    <string name="win">Win</string>
+    <string name="draw">Draw</string>
+    <string name="lose">Lose</string>
+    <string name="era">ERA</string>
+    <string name="avg">AVG</string>
+    <string name="bat_top3">Batter TOP 3</string>
+    <string name="pitcher_top3">Pitcher TOP 3</string>
+    <string name="bat_rank">Batting Average Rank</string>
+    <string name="homerun_rank">Homerun Rank</string>
+    <string name="steal_rank">Steal Rank</string>
+    <string name="era_rank">ERA Rank</string>
+    <string name="win_rank">WIN Rank</string>
+    <string name="strike_out_rank">Strike Out Rank</string>
 </resources>

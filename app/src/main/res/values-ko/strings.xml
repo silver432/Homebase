@@ -94,4 +94,22 @@
     <string name="cancel">취소</string>
     <string name="send_signup_email">가입인증 이메일을 보냈습니다</string>
     <string name="verify_email">이메일 가입인증을 해주세요</string>
+    <string name="main">메인</string>
+    <string name="schedule">일정</string>
+    <string name="team">팀</string>
+    <string name="personal">개인</string>
+    <string name="next_match">다음\n일정</string>
+    <string name="win">승</string>
+    <string name="draw">무</string>
+    <string name="lose">패</string>
+    <string name="era">방어율</string>
+    <string name="avg">타율</string>
+    <string name="bat_top3">타자 TOP 3</string>
+    <string name="pitcher_top3">투수 TOP 3</string>
+    <string name="bat_rank">타율 순위</string>
+    <string name="homerun_rank">홈런 순위</string>
+    <string name="steal_rank">도루 순위</string>
+    <string name="era_rank">방어율 순위</string>
+    <string name="win_rank">승리 순위</string>
+    <string name="strike_out_rank">탈삼진 순위</string>
 </resources>
