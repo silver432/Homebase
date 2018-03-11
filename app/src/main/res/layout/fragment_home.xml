@@ -7,6 +7,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/background_main"
+                android:layout_width="match_parent"
+                android:layout_height="241dp" />
+
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,7 +26,7 @@
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="162dp"
+                android:layout_marginTop="182dp"
                 android:src="@drawable/logo" />
 
             <TextView
@@ -1060,6 +1069,9 @@
             </FrameLayout>
 
         </android.support.v7.widget.LinearLayoutCompat>
+
+        </FrameLayout>
+
 
     </ScrollView>
 

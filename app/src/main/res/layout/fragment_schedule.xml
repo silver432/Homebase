@@ -1,6 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/schedule_cdl"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:id="@+id/schedule_sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/schedule_ll"
+                android:layout_width="match_parent"
+                android:layout_height="301dp"
+                android:background="@drawable/background_schedule"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="91dp"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="17dp"
+                    android:text="@string/last_5_game"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="13sp" />
+                
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_marginTop="11dp"
+                    android:layout_marginStart="52dp"
+                    android:layout_marginEnd="52dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/schedule_civ_record1"
+                            android:src="@color/colorBlack"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp" />
+
+                        <TextView
+                            android:id="@+id/schedule_tv_record1"
+                            android:layout_alignStart="@+id/schedule_civ_record1"
+                            android:layout_alignTop="@+id/schedule_civ_record1"
+                            android:layout_alignEnd="@+id/schedule_civ_record1"
+                            android:layout_alignBottom="@+id/schedule_civ_record1"
+                            android:layout_margin="1dp"
+                            android:gravity="center"
+                            android:text="승"
+                            android:textSize="14sp"
+                            android:textColor="#6adbf6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_below="@id/schedule_civ_record1"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="5dp"
+                            android:text="1.20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/schedule_civ_record2"
+                            android:src="@color/colorBlack"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp" />
+
+                        <TextView
+                            android:layout_alignStart="@+id/schedule_civ_record2"
+                            android:layout_alignTop="@+id/schedule_civ_record2"
+                            android:layout_alignEnd="@+id/schedule_civ_record2"
+                            android:layout_alignBottom="@+id/schedule_civ_record2"
+                            android:gravity="center"
+                            android:layout_margin="1dp"
+                            android:text="승"
+                            android:textSize="14sp"
+                            android:textColor="#6adbf6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_below="@id/schedule_civ_record2"
+                            android:layout_marginTop="5dp"
+                            android:layout_centerInParent="true"
+                            android:text="1.20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/schedule_civ_record3"
+                            android:src="@color/colorBlack"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp" />
+
+                        <TextView
+                            android:layout_alignStart="@+id/schedule_civ_record3"
+                            android:layout_alignTop="@+id/schedule_civ_record3"
+                            android:layout_alignEnd="@+id/schedule_civ_record3"
+                            android:layout_alignBottom="@+id/schedule_civ_record3"
+                            android:gravity="center"
+                            android:layout_margin="1dp"
+                            android:text="승"
+                            android:textSize="14sp"
+                            android:textColor="#6adbf6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_below="@id/schedule_civ_record3"
+                            android:layout_marginTop="5dp"
+                            android:layout_centerInParent="true"
+                            android:text="1.20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/schedule_civ_record4"
+                            android:src="@color/colorBlack"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp" />
+
+                        <TextView
+                            android:layout_alignStart="@+id/schedule_civ_record4"
+                            android:layout_alignTop="@+id/schedule_civ_record4"
+                            android:layout_alignEnd="@+id/schedule_civ_record4"
+                            android:layout_alignBottom="@+id/schedule_civ_record4"
+                            android:gravity="center"
+                            android:layout_margin="1dp"
+                            android:text="승"
+                            android:textSize="14sp"
+                            android:textColor="#6adbf6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_below="@id/schedule_civ_record4"
+                            android:layout_marginTop="5dp"
+                            android:layout_centerInParent="true"
+                            android:text="1.20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/schedule_civ_record5"
+                            android:src="@color/colorBlack"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp" />
+
+                        <TextView
+                            android:layout_alignStart="@+id/schedule_civ_record5"
+                            android:layout_alignTop="@+id/schedule_civ_record5"
+                            android:layout_alignEnd="@+id/schedule_civ_record5"
+                            android:layout_alignBottom="@+id/schedule_civ_record5"
+                            android:gravity="center"
+                            android:layout_margin="1dp"
+                            android:text="승"
+                            android:textSize="14sp"
+                            android:textColor="#6adbf6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_below="@id/schedule_civ_record5"
+                            android:layout_marginTop="5dp"
+                            android:layout_centerInParent="true"
+                            android:text="1.20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/schedule_rv"
+                android:background="#c0dee5"
+                android:layout_below="@id/schedule_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/schedule_fab"
+        android:src="@drawable/icon_plus"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="17dp"
+        app:layout_anchor="@id/schedule_sv"
+        app:layout_anchorGravity="end|bottom"
+        />
+
+</android.support.design.widget.CoordinatorLayout>

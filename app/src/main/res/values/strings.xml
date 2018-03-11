@@ -116,4 +116,12 @@
     <string name="era_rank">ERA Rank</string>
     <string name="win_rank">WIN Rank</string>
     <string name="strike_out_rank">Strike Out Rank</string>
+    <string name="last_5_game">Last 5 games</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 </resources>

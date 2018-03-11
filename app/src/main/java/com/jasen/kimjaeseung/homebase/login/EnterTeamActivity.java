@@ -1,6 +1,8 @@
 package com.jasen.kimjaeseung.homebase.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -165,6 +167,12 @@ public class EnterTeamActivity extends AppCompatActivity {
                         User user = new User(null,null,null,null,null,teamCode);
                         databaseReference1.setValue(user);
                     }
+
+                    //store teamcode in local
+                    SharedPreferences sharedPref = getSharedPreferences("teamPref",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("teamCode",teamCode);
+                    editor.apply();
 
                     goToSignUp3();
                 }

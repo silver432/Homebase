@@ -3,10 +3,13 @@ package com.jasen.kimjaeseung.homebase.network;
 import com.jasen.kimjaeseung.homebase.data.Player;
 import com.jasen.kimjaeseung.homebase.data.PostEmailByName;
 import com.jasen.kimjaeseung.homebase.data.PostRequestEmail;
+import com.jasen.kimjaeseung.homebase.data.Schedule;
 import com.jasen.kimjaeseung.homebase.data.Team;
 import com.jasen.kimjaeseung.homebase.data.User;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -49,4 +52,7 @@ public interface CloudService {
 
     @GET("getTeam")
     Call<Team> callTeam(@Query("teamCode")String teamCode);
+
+    @GET("getSchedule")
+    Call<List<Schedule>> callSchedule(@Query("teamCode")String teamCode);
 }
