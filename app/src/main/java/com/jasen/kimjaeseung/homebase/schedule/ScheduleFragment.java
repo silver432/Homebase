@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -22,6 +23,7 @@ import com.jasen.kimjaeseung.homebase.data.Schedule;
 import com.jasen.kimjaeseung.homebase.data.Team;
 import com.jasen.kimjaeseung.homebase.login.EnterTeamActivity;
 import com.jasen.kimjaeseung.homebase.login.LoginActivity;
+import com.jasen.kimjaeseung.homebase.main.MainActivity;
 import com.jasen.kimjaeseung.homebase.network.CloudService;
 import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
@@ -80,6 +82,17 @@ public class ScheduleFragment extends Fragment {
         SharedPreferences pref = getActivity().getSharedPreferences("teamPref", MODE_PRIVATE);
         teamCode = pref.getString("teamCode", "");
 
+        //add scroll listener
+        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                View child = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
+                int diff = (child.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
+
+                if (diff == 0) floatingActionButton.hide();
+                else floatingActionButton.show();
+            }
+        });
 
         return view;
     }
@@ -97,7 +110,7 @@ public class ScheduleFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Schedule>> call, Response<List<Schedule>> response) {
                 if (!response.isSuccessful()) {
-                    //해당팀 없음
+                    //팀코드 없음
                     ProgressUtils.dismiss();
                     ToastUtils.showToast(getContext(), getString(R.string.code_not_exist));
                     return;
@@ -156,7 +169,7 @@ public class ScheduleFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this.getContext());
+        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this.getContext(),teamCode);
         scheduleAdapter.setItemList(schedules);
 
         recyclerView.setAdapter(scheduleAdapter);

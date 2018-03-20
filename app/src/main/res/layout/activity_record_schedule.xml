@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorBlack"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/record_schedule_btn_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/back" />
+
+    <TextView
+        android:id="@+id/record_schedule_tv_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:text="@string/enter_record"
+        android:textColor="#ffffff"
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/record_schedule_tv_confirm"
+        android:textSize="14sp"
+        android:textColor="@color/colorWhite"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="22dp"
+        android:text="@string/signup_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/record_schedule_tv_opponent"
+        android:layout_below="@id/record_schedule_tv_confirm"
+        android:layout_centerHorizontal="true"
+        android:textSize="22sp"
+        android:layout_marginTop="53dp"
+        android:textColor="#00b4df"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/record_schedule_tv_when"
+        android:textSize="12sp"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@id/record_schedule_tv_opponent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/record_schedule_tv_where"
+        android:textSize="12sp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@id/record_schedule_tv_when"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/record_schedule_tv_vs"
+        android:textSize="25sp"
+        android:layout_below="@id/record_schedule_tv_where"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:text="@string/vs"
+        android:textColor="@color/colorWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textSize="47sp"
+        android:textColor="@color/colorWhite"
+        android:layout_toStartOf="@id/record_schedule_tv_vs"
+        android:layout_below="@id/record_schedule_tv_where"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="24dp"
+        android:text="99"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textSize="47sp"
+        android:textColor="@color/colorWhite"
+        android:layout_marginStart="24dp"
+        android:text="99"
+        android:layout_toEndOf="@id/record_schedule_tv_vs"
+        android:layout_below="@id/record_schedule_tv_where"
+        android:layout_marginTop="31dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/record_schedule_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+
+</RelativeLayout>

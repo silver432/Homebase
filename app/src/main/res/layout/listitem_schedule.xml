@@ -57,7 +57,7 @@
     </android.support.v7.widget.LinearLayoutCompat>
 
     <View
-        android:layout_width="3dp"
+        android:layout_width="1dp"
         android:layout_height="46dp"
         android:layout_gravity="center_vertical"
         android:background="@color/colorBlack" />

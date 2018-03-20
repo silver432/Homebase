@@ -1,10 +1,12 @@
 package com.jasen.kimjaeseung.homebase.data;
 
+import java.io.Serializable;
+
 /**
  * Created by kimjaeseung on 2018. 3. 10..
  */
 
-public class Schedule {
+public class Schedule implements Serializable{
     private String matchDate;
     private String matchPlace;
     private String opponentTeam;

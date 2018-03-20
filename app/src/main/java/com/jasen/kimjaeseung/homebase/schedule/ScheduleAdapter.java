@@ -1,6 +1,7 @@
 package com.jasen.kimjaeseung.homebase.schedule;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.Schedule;
+import com.jasen.kimjaeseung.homebase.login.LoginActivity;
 import com.jasen.kimjaeseung.homebase.util.DateUtils;
 
 import java.text.ParseException;
@@ -29,17 +31,19 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final String TAG = ScheduleAdapter.class.getSimpleName();
 
     private Context mContext;
+    private String teamCode;
     private List<Schedule> schedules = new ArrayList<>();
     private static final int SCHEDULE_NORMAL = 0;
     private static final int SCHEDULE_FIRST = 1;
 
-    public ScheduleAdapter(Context context) {
+    public ScheduleAdapter(Context context, String teamCode) {
         mContext = context;
+        this.teamCode = teamCode;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (viewType){
+        switch (viewType) {
             case SCHEDULE_NORMAL:
                 Context context = parent.getContext();
 
@@ -80,13 +84,18 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getItemViewType(int position) {
         Schedule schedule = schedules.get(position);
 
+        int previousYear = -1;
+        int currentYear = -1;
         int previousMonth = -1;
         int currentMonth = -1;
-        if (position!=0){
-            previousMonth = DateUtils.StringToCalendar(schedules.get(position-1).getMatchDate()).get(Calendar.MONTH);
+        if (position != 0) {
+            previousMonth = DateUtils.StringToCalendar(schedules.get(position - 1).getMatchDate()).get(Calendar.MONTH);
             currentMonth = DateUtils.StringToCalendar(schedule.getMatchDate()).get(Calendar.MONTH);
+            previousYear = DateUtils.StringToCalendar(schedules.get(position - 1).getMatchDate()).get(Calendar.YEAR);
+            currentYear = DateUtils.StringToCalendar(schedule.getMatchDate()).get(Calendar.YEAR);
         }
-        if (position==0||previousMonth!=currentMonth) return SCHEDULE_FIRST;
+        if (position == 0 || previousMonth != currentMonth || previousYear != currentYear)
+            return SCHEDULE_FIRST;
         else return SCHEDULE_NORMAL;
     }
 
@@ -109,7 +118,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView record;
 
 
-        public ScheduleViewHolder(View itemView) {
+        public ScheduleViewHolder(final View itemView) {
             super(itemView);
 
             dateFront = (TextView) itemView.findViewById(R.id.listitem_tv_date_front);
@@ -118,6 +127,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             date = (TextView) itemView.findViewById(R.id.listitem_tv_date);
             place = (TextView) itemView.findViewById(R.id.listitem_tv_place);
             record = (TextView) itemView.findViewById(R.id.listitem_tv_record);
+
+            record.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    goToRecordSchedule(schedules.get(position));
+                }
+            });
         }
 
         public void bind(Schedule schedule) {
@@ -157,7 +174,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public class FirstScheduleViewHolder extends RecyclerView.ViewHolder{
+    public class FirstScheduleViewHolder extends RecyclerView.ViewHolder {
         private TextView month;
         private TextView year;
         private TextView dateFront;
@@ -170,14 +187,22 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public FirstScheduleViewHolder(View itemView) {
             super(itemView);
 
-            month = (TextView)itemView.findViewById(R.id.listitem_first_tv_month);
-            year = (TextView)itemView.findViewById(R.id.listitem_first_tv_year);
+            month = (TextView) itemView.findViewById(R.id.listitem_first_tv_month);
+            year = (TextView) itemView.findViewById(R.id.listitem_first_tv_year);
             dateFront = (TextView) itemView.findViewById(R.id.listitem_first_tv_date_front);
             dayOfWeekFront = (TextView) itemView.findViewById(R.id.listitem_first_tv_day_of_week);
             opponent = (TextView) itemView.findViewById(R.id.listitem_first_tv_opponent);
             date = (TextView) itemView.findViewById(R.id.listitem_first_tv_date);
             place = (TextView) itemView.findViewById(R.id.listitem_first_tv_place);
             record = (TextView) itemView.findViewById(R.id.listitem_first_tv_record);
+
+            record.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    goToRecordSchedule(schedules.get(position));
+                }
+            });
         }
 
         public void bind(Schedule schedule) {
@@ -208,7 +233,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     break;
             }
 
-            month.setText(String.valueOf(calendar.get(Calendar.MONTH)+1));
+            month.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1));
             year.setText(String.valueOf(calendar.get(Calendar.YEAR)));
             dateFront.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
             dayOfWeekFront.setText(strDow);
@@ -217,5 +242,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             place.setText(schedule.getMatchPlace());
 
         }
+    }
+
+    private void goToRecordSchedule(Schedule schedule) {
+        final Intent intent = new Intent(mContext, RecordScheduleActivity.class);
+        intent.putExtra("schedule", schedule);
+        intent.putExtra("teamCode", teamCode);
+        mContext.startActivity(intent);
     }
 }

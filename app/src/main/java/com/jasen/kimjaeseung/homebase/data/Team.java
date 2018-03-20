@@ -40,5 +40,4 @@ public class Team {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

@@ -56,6 +56,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void init(){
         mAuth = FirebaseAuth.getInstance();
+//        mAuth.signOut();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {

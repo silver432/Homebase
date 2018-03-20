@@ -77,6 +77,10 @@
             android:name=".schedule.AddScheudleActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".schedule.RecordScheduleActivity"
+            android:theme="@style/AppTheme.SignUpTheme"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

@@ -1,12 +1,14 @@
 package com.jasen.kimjaeseung.homebase.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -59,7 +61,7 @@ public class SignUpActivity4 extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
-
+    private String teamCode;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +79,10 @@ public class SignUpActivity4 extends AppCompatActivity {
         initSpinner();
 
         noEditText.addTextChangedListener(new BaseTextWatcher(this, noTextInputLayout, noEditText, null));
+
+        //get teamcode in local
+        SharedPreferences pref = this.getSharedPreferences("teamPref", MODE_PRIVATE);
+        teamCode = pref.getString("teamCode", "");
 
     }
 
@@ -155,6 +161,7 @@ public class SignUpActivity4 extends AppCompatActivity {
         String pitcher = plCheckBox.isChecked() ? getString(R.string.left) : getString(R.string.right);
         String hitter = hlCheckBox.isChecked() ? getString(R.string.left) : getString(R.string.right);
 
+
         DatabaseReference databaseReference = mDatabase.getReference("users");
 
         if (provider.contains(getString(R.string.facebook)) || provider.contains(getString(R.string.google))) {
@@ -167,7 +174,7 @@ public class SignUpActivity4 extends AppCompatActivity {
 
         databaseReference = mDatabase.getReference("players");
 
-        Player player = new Player(name, null, position,Integer.parseInt(no), dHeight, dWeight,hitter,pitcher,new SimpleDateFormat("yyyy.MM.dd").format(new Date()),null );
+        Player player = new Player(name, null, position,Integer.parseInt(no), dHeight, dWeight,hitter,pitcher,new SimpleDateFormat("yyyy.MM.dd").format(new Date()),null,teamCode );
         databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(player, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {

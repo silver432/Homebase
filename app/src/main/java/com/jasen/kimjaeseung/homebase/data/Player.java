@@ -17,11 +17,12 @@ public class Player {
     private String pitchPosition;
     private String joinedAt;
     private String outedAt;
+    private String teamCode;
 
     public Player() {
     }
 
-    public Player(String name, String image, String position, int backNumber, double height, double weight, String batPosition, String pitchPosition, String joinedAt, String outedAt) {
+    public Player(String name, String image, String position, int backNumber, double height, double weight, String batPosition, String pitchPosition, String joinedAt, String outedAt, String teamCode) {
         this.name = name;
         this.image = image;
         this.position = position;
@@ -32,6 +33,7 @@ public class Player {
         this.pitchPosition = pitchPosition;
         this.joinedAt = joinedAt;
         this.outedAt = outedAt;
+        this.teamCode = teamCode;
     }
 
     public String getName() {
@@ -112,5 +114,13 @@ public class Player {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
     }
 }

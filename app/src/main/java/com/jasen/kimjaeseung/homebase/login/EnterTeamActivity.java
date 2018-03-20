@@ -153,7 +153,7 @@ public class EnterTeamActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     DatabaseReference databaseReference = mDatabase.getReference("teams").child(teamCode);
-                    databaseReference.child("members").push().setValue(mAuth.getCurrentUser().getUid());
+//                    databaseReference.child("members").push().setValue(mAuth.getCurrentUser().getUid());
 
                     String provider = mAuth.getCurrentUser().getProviders().get(0);
 

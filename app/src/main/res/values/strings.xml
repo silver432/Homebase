@@ -124,4 +124,8 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="enter_record">Enter Record</string>
+    <string name="vs">vs</string>
+    <string name="loading_error">Loading Error</string>
+    <string name="schedule_not_exist">Schedule not exist</string>
 </resources>
