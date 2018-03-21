@@ -10,11 +10,13 @@ public class Team {
     private String name;
     private String logo;
     private String description;
+    private Object members;
 
-    public Team(String name, String logo, String description) {
+    public Team(String name, String logo, String description, Object members) {
         this.name = name;
         this.logo = logo;
         this.description = description;
+        this.members = members;
     }
 
     public String getName() {
@@ -39,5 +41,13 @@ public class Team {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Object getMembers() {
+        return members;
+    }
+
+    public void setMembers(Object members) {
+        this.members = members;
     }
 }

@@ -128,4 +128,30 @@
     <string name="vs">vs</string>
     <string name="loading_error">Loading Error</string>
     <string name="schedule_not_exist">Schedule not exist</string>
+    <string-array name="hitter_input">
+        <item>single</item>
+        <item>two-base</item>
+        <item>three-base</item>
+        <item>home run</item>
+        <item>walks</item>
+        <item>hit</item>
+        <item>stolen</item>
+        <item>strikeouts</item>
+        <item>grounder</item>
+        <item>goal</item>
+        <item>RBI</item>
+    </string-array>
+    <string-array name="pitcher_input">
+        <item>victory</item>
+        <item>defeat</item>
+        <item>hold</item>
+        <item>save</item>
+        <item>inning</item>
+        <item>strikeouts</item>
+        <item>hits</item>
+        <item>home runs</item>
+        <item>walks</item>
+        <item>hit batters</item>
+    </string-array>
+
 </resources>

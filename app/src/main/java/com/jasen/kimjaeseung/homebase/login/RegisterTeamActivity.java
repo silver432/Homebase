@@ -188,7 +188,7 @@ public class RegisterTeamActivity extends AppCompatActivity {
         // team db
         DatabaseReference databaseReference = mDataBase.getReference("teams");
         teamKey = databaseReference.push().getKey();
-        Team team = new Team(teamName,teamKey+"/teamLogo",teamIntro);
+        Team team = new Team(teamName,teamKey+"/teamLogo",teamIntro,null);
         databaseReference.child(teamKey).setValue(team);
         databaseReference.child(teamKey).child("admin").setValue(mAuth.getCurrentUser().getUid());
 //        databaseReference.child(teamKey).child("members").push().setValue(mAuth.getCurrentUser().getUid());

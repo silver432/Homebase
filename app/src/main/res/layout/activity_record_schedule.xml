@@ -97,10 +97,10 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/record_schedule_rv"
+        android:layout_marginTop="42dp"
+        android:layout_below="@id/record_schedule_tv_vs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"/>
 
 
 

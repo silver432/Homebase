@@ -123,4 +123,29 @@
     <string name="enter_record">기록 입력</string>
     <string name="loading_error">로딩 에러</string>
     <string name="schedule_not_exist">스케줄이 없습니다</string>
+    <string-array name="hitter_input">
+        <item>1루타</item>
+        <item>2루타</item>
+        <item>3루타</item>
+        <item>홈런</item>
+        <item>볼넷</item>
+        <item>사구</item>
+        <item>도루</item>
+        <item>삼진</item>
+        <item>땅볼</item>
+        <item>득점</item>
+        <item>타점</item>
+    </string-array>
+    <string-array name="pitcher_input">
+        <item>승리</item>
+        <item>패배</item>
+        <item>홀드</item>
+        <item>세이브</item>
+        <item>이닝</item>
+        <item>삼진</item>
+        <item>피안타</item>
+        <item>홈런</item>
+        <item>볼넷</item>
+        <item>사구</item>
+    </string-array>
 </resources>

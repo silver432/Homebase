@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="67dp">
+    android:layout_height="67dp"
+    android:layout_marginTop="1dp"
+    android:background="@color/colorGray">
 
     <TextView
         android:id="@+id/listitem_member_tv_num"
-        android:textSize="28sp"
-        android:layout_marginStart="28dp"
-        android:layout_gravity="center_vertical"
-        android:textColor="@color/colorBlack"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="28dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="28sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/listitem_member_civ"
-        android:src="@drawable/player_image"
-        android:layout_marginStart="15dp"
-        android:layout_gravity="center_vertical"
         android:layout_width="40dp"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@id/listitem_member_tv_num"
+        android:src="@drawable/player_image" />
 
     <TextView
         android:id="@+id/listitem_member_tv_name"
-        android:textSize="14sp"
-        android:layout_marginStart="18dp"
-        android:textColor="@color/colorBlack"
-        android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="18dp"
+        android:layout_toEndOf="@id/listitem_member_civ"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp" />
+
     <View
-        android:layout_gravity="center_vertical|end"
-        android:layout_marginEnd="83dp"
-        android:layout_width="3dp"
-        android:layout_height="36dp"/>
-    
+        android:layout_width="1dp"
+        android:layout_height="36dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="26dp"
+        android:layout_toStartOf="@id/listitem_member_tv_record"
+        android:background="@color/colorBlack" />
+
     <TextView
         android:id="@+id/listitem_member_tv_record"
-        android:text="결과입력"
-        android:layout_marginEnd="20dp"
-        android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="26dp"
+        android:text="결과입력" />
 
-</android.support.v7.widget.LinearLayoutCompat>
+</RelativeLayout>

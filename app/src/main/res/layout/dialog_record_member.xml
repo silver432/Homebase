@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/dialog_record_btn_cancel"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/icon_exit" />
+
+    <TextView
+        android:id="@+id/dialog_record_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/dialog_record_tv_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="22dp"
+        android:text="@string/signup_confirm"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp" />
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/dialog_record_ll"
+        android:layout_below="@id/dialog_record_tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp">
+
+        <TextView
+            android:id="@+id/dialog_record_tv_hitter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           android:gravity="center_horizontal"
+            android:layout_weight="1"
+            android:text="@string/hitter"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/dialog_record_tv_pitcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"
+            android:text="@string/pitcher"
+            android:textSize="15sp" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <ListView
+        android:layout_below="@id/dialog_record_ll"
+        android:id="@+id/dialog_record_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

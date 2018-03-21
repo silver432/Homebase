@@ -1,5 +1,6 @@
 package com.jasen.kimjaeseung.homebase.schedule;
 
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.Player;
 import com.jasen.kimjaeseung.homebase.data.Schedule;
@@ -18,12 +22,17 @@ import com.jasen.kimjaeseung.homebase.network.CloudService;
 import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -77,8 +86,6 @@ public class RecordScheduleActivity extends AppCompatActivity {
         tvWhen.setText(schedule.getMatchDate());
         tvWhere.setText(schedule.getMatchPlace());
 
-        initRecyclerView();
-
     }
 
     @OnClick({R.id.record_schedule_btn_back, R.id.record_schedule_tv_confirm})
@@ -93,77 +100,66 @@ public class RecordScheduleActivity extends AppCompatActivity {
         }
     }
 
-    private void initRecyclerView() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        getPlayers();
+    }
+
+    private void initRecyclerView(List<Player> players) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
         MemberAdapter memberAdapter = new MemberAdapter(this);
-//        memberAdapter.setItemList(getPlayers());
+        memberAdapter.setItemList(players);
 
         recyclerView.setAdapter(memberAdapter);
     }
 
-//    private List<Player> getPlayers() {
-//        ProgressUtils.show(this, R.string.loading);
-//
-//        //팀 불러오기
-//        final List<String> memberIds = new ArrayList<>();
-//        CloudService service = CloudService.retrofit.create(CloudService.class);
-//        Call<Team> call = service.callTeam(teamCode);
-//        call.enqueue(new Callback<Team>() {
-//            @Override
-//            public void onResponse(Call<Team> call, Response<Team> response) {
-//                if (!response.isSuccessful()) {
-//                    //team 불러오기실패
-//                    ProgressUtils.dismiss();
-//                    Log.d(TAG,response.body()+" "+teamCode);
-//                    ToastUtils.showToast(getApplicationContext(), getString(R.string.loading_error));
-//                    return;
-//                }
-//                //team 존재
-//                Team team = response.body();
-//                if (team != null) memberIds.addAll(team.getMembers());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Team> call, Throwable t) {
-//                ProgressUtils.dismiss();
-//
-//                //네트워크 에러
-//                Log.d(TAG, "onResponseFailed: " + call.request().url() + " " + t.getMessage());
-//            }
-//        });
-//
-//        //멤버 불러오기
-//        final List<Player> players = new ArrayList<>();
-//        for (String id : memberIds) {
-//            CloudService service1 = CloudService.retrofit.create(CloudService.class);
-//            Call<Player> call1 = service1.callPlayer(id);
-//            call1.enqueue(new Callback<Player>() {
-//                @Override
-//                public void onResponse(Call<Player> call, Response<Player> response) {
-//                    if (!response.isSuccessful()){
-//                        ProgressUtils.dismiss();
-//                        ToastUtils.showToast(getApplicationContext(),getString(R.string.loading_error));
-//                        Log.d(TAG,"player");
-//                        return;
-//                    }
-//                    Player player = response.body();
-//                    players.add(player);
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Player> call, Throwable t) {
-//                    ProgressUtils.dismiss();
-//
-//                    //네트워크 에러
-//                    Log.d(TAG, "onResponseFailed: " + call.request().url() + " " + t.getMessage());
-//                }
-//            });
-//        }
-//        ProgressUtils.dismiss();
-//
-//        return players;
-//    }
+    private void getPlayers() {
+        ProgressUtils.show(this, R.string.loading);
+
+        //멤버 불러오기
+        final List<Player> players = new ArrayList<>();
+        CloudService service = CloudService.retrofit.create(CloudService.class);
+        Call<Team> call = service.callTeam(teamCode);
+        call.enqueue(new Callback<Team>() {
+            @Override
+            public void onResponse(Call<Team> call, Response<Team> response) {
+                if (!response.isSuccessful()){
+                    ProgressUtils.dismiss();
+                    ToastUtils.showToast(getApplicationContext(), getString(R.string.loading_error));
+                    return;
+                }
+                Team team = response.body();
+
+                try {
+                    if (team != null) {
+                        JSONObject jsonObject = new JSONObject(team.getMembers().toString());
+                        Iterator iterator = jsonObject.keys();
+                        while (iterator.hasNext()){
+                            JsonElement jsonElement = new JsonParser().parse(jsonObject.get(iterator.next().toString()).toString());
+                            Player player = new Gson().fromJson(jsonElement,Player.class);
+                            players.add(player);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                initRecyclerView(players);
+                ProgressUtils.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<Team> call, Throwable t) {
+                ProgressUtils.dismiss();
+
+                //네트워크 에러
+                Log.d(TAG, "onResponseFailed: " + call.request().url() + " " + t.getMessage());
+            }
+        });
+    }
 }
