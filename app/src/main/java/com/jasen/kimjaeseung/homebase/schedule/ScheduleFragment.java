@@ -2,6 +2,7 @@ package com.jasen.kimjaeseung.homebase.schedule;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,7 +20,15 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.jasen.kimjaeseung.homebase.R;
+import com.jasen.kimjaeseung.homebase.data.Player;
 import com.jasen.kimjaeseung.homebase.data.Schedule;
 import com.jasen.kimjaeseung.homebase.data.Team;
 import com.jasen.kimjaeseung.homebase.login.EnterTeamActivity;
@@ -27,6 +37,10 @@ import com.jasen.kimjaeseung.homebase.main.MainActivity;
 import com.jasen.kimjaeseung.homebase.network.CloudService;
 import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,12 +48,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,7 +71,10 @@ public class ScheduleFragment extends Fragment {
 
     private String teamCode;
     private List<Schedule> schedules = new ArrayList<>();
+    private FirebaseStorage mStorage;
 
+    @BindView(R.id.schedule_civ_logo)
+    CircleImageView civLogo;
     @BindView(R.id.schedule_cdl)
     CoordinatorLayout coordinatorLayout;
     @BindView(R.id.schedule_sv)
@@ -78,6 +97,8 @@ public class ScheduleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
         ButterKnife.bind(this, view);
 
+        mStorage = FirebaseStorage.getInstance();
+
         //get teamcode in local
         SharedPreferences pref = getActivity().getSharedPreferences("teamPref", MODE_PRIVATE);
         teamCode = pref.getString("teamCode", "");
@@ -94,21 +115,40 @@ public class ScheduleFragment extends Fragment {
             }
         });
 
+        //change logo
+        StorageReference storageReference = mStorage.getReference(teamCode + "/teamLogo");
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.with(getContext())
+                        .load(uri)
+                        .into(civLogo);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        schedules.clear();
 
         ProgressUtils.show(getContext(), R.string.loading);
 
         //스케줄 동기화
         CloudService service = CloudService.retrofit.create(CloudService.class);
-        Call<List<Schedule>> call = service.callSchedule(teamCode);
-        call.enqueue(new Callback<List<Schedule>>() {
+        Call<String> call = service.callSchedule(teamCode);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<List<Schedule>> call, Response<List<Schedule>> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if (!response.isSuccessful()) {
                     //팀코드 없음
                     ProgressUtils.dismiss();
@@ -116,7 +156,22 @@ public class ScheduleFragment extends Fragment {
                     return;
                 }
 
-                schedules = response.body();
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body());
+                    Iterator iterator = jsonObject.keys();
+                    while (iterator.hasNext()) {
+                        String key = (String) iterator.next();
+                        JsonElement jsonElement = null;
+                        jsonElement = new JsonParser().parse(jsonObject.get(key).toString());
+                        Schedule schedule = new Gson().fromJson(jsonElement, Schedule.class);
+                        schedules.add(schedule);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
                 Collections.sort(schedules, new Comparator<Schedule>() {
                     @Override
                     public int compare(Schedule s1, Schedule s2) {
@@ -137,10 +192,11 @@ public class ScheduleFragment extends Fragment {
                 initRecyclerView();
 
                 ProgressUtils.dismiss();
+
             }
 
             @Override
-            public void onFailure(Call<List<Schedule>> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 ProgressUtils.dismiss();
 
                 //네트워크 에러
@@ -169,10 +225,10 @@ public class ScheduleFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this.getContext(),teamCode);
+        ScheduleAdapter scheduleAdapter = new ScheduleAdapter(this.getContext(), teamCode);
         scheduleAdapter.setItemList(schedules);
 
         recyclerView.setAdapter(scheduleAdapter);
-
     }
+
 }

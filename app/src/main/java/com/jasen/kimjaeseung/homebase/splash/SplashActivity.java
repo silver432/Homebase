@@ -16,6 +16,7 @@ import com.jasen.kimjaeseung.homebase.login.SignUpActivity2;
 import com.jasen.kimjaeseung.homebase.login.SignUpActivity3;
 import com.jasen.kimjaeseung.homebase.main.MainActivity;
 import com.jasen.kimjaeseung.homebase.network.CloudService;
+import com.jasen.kimjaeseung.homebase.util.SharedPrefUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,7 +55,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    private void init(){
+    private void init() {
         mAuth = FirebaseAuth.getInstance();
 //        mAuth.signOut();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -109,8 +110,11 @@ public class SplashActivity extends AppCompatActivity {
                             Log.d(TAG, "onResponseFailed: " + call.request().url());
                         }
                     });
-                }
-                else goToMakeTeam();
+
+                    //synchronize teamcode and user
+                    synchronizeTeamCode();
+
+                } else goToMakeTeam();
             }
 
             @Override
@@ -147,5 +151,32 @@ public class SplashActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void synchronizeTeamCode() {
+
+        //synchronize teamcode and user
+        CloudService service = CloudService.retrofit.create(CloudService.class);
+        Call<User> call = service.callUser(mAuth.getCurrentUser().getUid());
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (!response.isSuccessful()) {
+                    //user 없음
+                    return;
+                }
+                User user = response.body();
+                if (user != null) {
+                    SharedPrefUtils.storeTeamCode(getApplicationContext(), user.getTeamCode());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                //네트워크에러
+                Log.d(TAG, t.toString());
+            }
+        });
+
     }
 }

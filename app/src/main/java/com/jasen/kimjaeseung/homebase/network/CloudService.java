@@ -54,5 +54,5 @@ public interface CloudService {
     Call<Team> callTeam(@Query("teamCode")String teamCode);
 
     @GET("getSchedule")
-    Call<List<Schedule>> callSchedule(@Query("teamCode")String teamCode);
+    Call<String> callSchedule(@Query("teamCode")String teamCode);
 }

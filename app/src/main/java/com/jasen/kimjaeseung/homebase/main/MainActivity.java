@@ -1,6 +1,7 @@
 package com.jasen.kimjaeseung.homebase.main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.Player;
+import com.jasen.kimjaeseung.homebase.data.User;
 import com.jasen.kimjaeseung.homebase.home.HomeFragment;
 import com.jasen.kimjaeseung.homebase.login.LoginActivity;
 import com.jasen.kimjaeseung.homebase.login.SignUpActivity2;
@@ -26,6 +28,7 @@ import com.jasen.kimjaeseung.homebase.network.CloudService;
 import com.jasen.kimjaeseung.homebase.personal.PersonalFragment;
 import com.jasen.kimjaeseung.homebase.schedule.ScheduleFragment;
 import com.jasen.kimjaeseung.homebase.team.TeamFragment;
+import com.jasen.kimjaeseung.homebase.util.SharedPrefUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,14 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+
         init();
     }
 
     private void init() {
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
 
-        if (mUser==null) goToLogin();
+        if (mUser == null) goToLogin();
 
         //first fragment
         switchFragment(HomeFragment.getInstance());
@@ -65,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.menu_main_main:
                         switchFragment(HomeFragment.getInstance());
                         return true;

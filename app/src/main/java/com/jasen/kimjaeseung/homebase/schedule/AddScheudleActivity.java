@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.Schedule;
+import com.jasen.kimjaeseung.homebase.util.SharedPrefUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,8 +68,7 @@ public class AddScheudleActivity extends AppCompatActivity {
 
     private void addSchedule() {
         //get teamcode in local
-        SharedPreferences pref = getSharedPreferences("teamPref", MODE_PRIVATE);
-        String teamCode = pref.getString("teamCode", "");
+        String teamCode = SharedPrefUtils.getTeamCode(this);
 
         DatabaseReference databaseReference = mDatabase.getReference("schedules");
 
