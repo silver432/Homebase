@@ -68,7 +68,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="기록하기"
+        android:text="@string/record"
         android:textSize="12sp" />
 
 </android.support.v7.widget.LinearLayoutCompat>

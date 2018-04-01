@@ -164,6 +164,7 @@ public class ScheduleFragment extends Fragment {
                         JsonElement jsonElement = null;
                         jsonElement = new JsonParser().parse(jsonObject.get(key).toString());
                         Schedule schedule = new Gson().fromJson(jsonElement, Schedule.class);
+                        schedule.setSid(key);
                         schedules.add(schedule);
                     }
 

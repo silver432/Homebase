@@ -129,29 +129,58 @@
     <string name="loading_error">Loading Error</string>
     <string name="schedule_not_exist">Schedule not exist</string>
     <string-array name="hitter_input">
-        <item>single</item>
-        <item>two-base</item>
-        <item>three-base</item>
-        <item>home run</item>
-        <item>walks</item>
-        <item>hit</item>
-        <item>stolen</item>
-        <item>strikeouts</item>
-        <item>grounder</item>
-        <item>goal</item>
-        <item>RBI</item>
+        <item>@string/single</item>
+        <item>@string/two_base</item>
+        <item>@string/three_base</item>
+        <item>@string/homerun</item>
+        <item>@string/walks</item>
+        <item>@string/hit</item>
+        <item>@string/sacrifice_hit</item>
+        <item>@string/stolen</item>
+        <item>@string/strikeouts</item>
+        <item>@string/grounder</item>
+        <item>@string/fly_ball</item>
+        <item>@string/goal</item>
+        <item>@string/rbi</item>
     </string-array>
     <string-array name="pitcher_input">
-        <item>victory</item>
-        <item>defeat</item>
-        <item>hold</item>
-        <item>save</item>
-        <item>inning</item>
-        <item>strikeouts</item>
-        <item>hits</item>
-        <item>home runs</item>
-        <item>walks</item>
-        <item>hit batters</item>
+        <item>@string/victory</item>
+        <item>@string/defeat</item>
+        <item>@string/hold</item>
+        <item>@string/save</item>
+        <item>@string/inning</item>
+        <item>@string/strikeouts</item>
+        <item>@string/hits</item>
+        <item>@string/homeruns</item>
+        <item>@string/walks</item>
+        <item>@string/hit_batters</item>
     </string-array>
-
+    <string name="opponent">Opponent</string>
+    <string name="homescore">Home Score</string>
+    <string name="opponentscore">Opponent Score</string>
+    <string name="not_number">Please Insert Number</string>
+    <string name="record">Record</string>
+    <string name="result">Result</string>
+    <string name="single">Single</string>
+    <string name="two_base">Two-base</string>
+    <string name="three_base">Three-base</string>
+    <string name="homerun">Home Run</string>
+    <string name="walks">Walks</string>
+    <string name="hit">Hit</string>
+    <string name="sacrifice_hit">Sacrifice Hit</string>
+    <string name="stolen">Stolen</string>
+    <string name="strikeouts">Strike Outs</string>
+    <string name="grounder">Grounder</string>
+    <string name="fly_ball">Fly Ball</string>
+    <string name="goal">Goal</string>
+    <string name="rbi">RBI</string>
+    <string name="victory">Victory</string>
+    <string name="defeat">Defeat</string>
+    <string name="hold">Hold</string>
+    <string name="save">Save</string>
+    <string name="inning">Inning</string>
+    <string name="hits">Hits</string>
+    <string name="homeruns">Home Runs</string>
+    <string name="hit_batters">Hit Batters</string>
+    <string name="zero">0</string>
 </resources>

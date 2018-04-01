@@ -92,7 +92,7 @@ public class AddScheudleActivity extends AppCompatActivity {
         String place = placeEditText.getText().toString();
         String opponent = opponentEditText.getText().toString();
 
-        Schedule schedule = new Schedule(sdf.format(dateResult), place, opponent);
+        Schedule schedule = new Schedule(sdf.format(dateResult), place, opponent,String.valueOf(-1),String.valueOf(-1));
 
         databaseReference.child(teamCode).push().setValue(schedule);
 

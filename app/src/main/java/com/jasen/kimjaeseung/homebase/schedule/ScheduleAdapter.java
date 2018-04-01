@@ -9,19 +9,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.jasen.kimjaeseung.homebase.R;
+import com.jasen.kimjaeseung.homebase.data.Player;
 import com.jasen.kimjaeseung.homebase.data.Schedule;
+import com.jasen.kimjaeseung.homebase.data.Team;
 import com.jasen.kimjaeseung.homebase.login.LoginActivity;
+import com.jasen.kimjaeseung.homebase.network.CloudService;
 import com.jasen.kimjaeseung.homebase.util.DateUtils;
+import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
+import com.jasen.kimjaeseung.homebase.util.ToastUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by kimjaeseung on 2018. 3. 10..
@@ -240,7 +258,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             opponent.setText(schedule.getOpponentTeam());
             date.setText(schedule.getMatchDate());
             place.setText(schedule.getMatchPlace());
-
+            String strRecord = "";
+            Log.d(TAG,schedule.getHomeScore()+" "+schedule.getOpponentScore());
+            if (!schedule.getHomeScore().equals(String.valueOf(-1)) && !schedule.getOpponentScore().equals(String.valueOf(-1))) {
+                strRecord = schedule.getHomeScore() + " : " + schedule.getOpponentScore();
+                record.setTextSize(20);
+                record.setText(strRecord);
+            }
         }
     }
 

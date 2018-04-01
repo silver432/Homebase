@@ -1,11 +1,16 @@
 package com.jasen.kimjaeseung.homebase.schedule;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jasen.kimjaeseung.homebase.R;
@@ -19,8 +24,10 @@ import java.util.List;
 
 public class PHAdapter extends BaseAdapter {
     private List<PHListItem> phListItems = new ArrayList<>();
+    private Context mContext;
 
-    public PHAdapter() {
+    public PHAdapter(Context context) {
+        mContext = context;
     }
 
     @Override
@@ -57,6 +64,7 @@ public class PHAdapter extends BaseAdapter {
 
         menu.setText(phListItem.getMenu());
         num.setText(String.valueOf(phListItem.getNum()));
+
 
         return view;
     }

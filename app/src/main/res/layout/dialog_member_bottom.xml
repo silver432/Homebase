@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/dialog_bottom_member_btn_cancel"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/icon_exit" />
+
+    <TextView
+        android:id="@+id/dialog_bottom_member_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp" />
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/dialog_bottom_member_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_bottom_member_tv_name"
+        android:layout_marginTop="26dp">
+
+        <TextView
+            android:id="@+id/dialog_bottom_member_tv_hitter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/hitter"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/dialog_bottom_member_tv_pitcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/pitcher"
+            android:textSize="15sp" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/dialog_bottom_member_civ"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_below="@id/dialog_bottom_member_ll"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/player_image" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/dialog_bottom_member_civ"
+        android:layout_marginTop="14dp"
+        android:background="@color/colorGray" />
+
+    <LinearLayout
+        android:id="@+id/dialog_bottom_member_ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_bottom_member_civ"
+        android:layout_marginTop="25dp"
+        android:orientation="vertical" />
+
+
+</RelativeLayout>

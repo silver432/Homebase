@@ -75,6 +75,7 @@
 
         <activity
             android:name=".schedule.AddScheudleActivity"
+            android:theme="@style/AppTheme.SignUpTheme"
             android:screenOrientation="portrait" />
 
         <activity android:name=".schedule.RecordScheduleActivity"

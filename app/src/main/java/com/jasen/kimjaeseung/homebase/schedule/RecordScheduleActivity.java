@@ -1,16 +1,23 @@
 package com.jasen.kimjaeseung.homebase.schedule;
 
+import android.content.DialogInterface;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -62,9 +69,14 @@ public class RecordScheduleActivity extends AppCompatActivity {
     TextView tvWhere;
     @BindView(R.id.record_schedule_rv)
     RecyclerView recyclerView;
+    @BindView(R.id.record_schedule_tv_homescore)
+    TextView tvHomeScore;
+    @BindView(R.id.record_schedule_tv_opponentscore)
+    TextView tvOpponentScore;
 
     private Schedule schedule;
     private String teamCode;
+    private FirebaseDatabase mDatabase;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +89,8 @@ public class RecordScheduleActivity extends AppCompatActivity {
     }
 
     private void init() {
+        mDatabase = FirebaseDatabase.getInstance();
+
         //get data
         schedule = (Schedule) getIntent().getSerializableExtra("schedule");
         teamCode = getIntent().getStringExtra("teamCode");
@@ -85,17 +99,27 @@ public class RecordScheduleActivity extends AppCompatActivity {
         tvOpponent.setText(schedule.getOpponentTeam());
         tvWhen.setText(schedule.getMatchDate());
         tvWhere.setText(schedule.getMatchPlace());
+        if (!schedule.getHomeScore().equals(String.valueOf(-1))&&!schedule.getOpponentScore().equals(String.valueOf(-1))){
+            tvHomeScore.setText(schedule.getHomeScore());
+            tvOpponentScore.setText(schedule.getOpponentScore());
+        }
 
     }
 
-    @OnClick({R.id.record_schedule_btn_back, R.id.record_schedule_tv_confirm})
+    @OnClick({R.id.record_schedule_btn_back, R.id.record_schedule_tv_confirm,R.id.record_schedule_tv_homescore,R.id.record_schedule_tv_opponentscore})
     public void mOnClick(View view) {
         switch (view.getId()) {
             case R.id.record_schedule_btn_back:
                 finish();
                 break;
             case R.id.record_schedule_tv_confirm:
-
+                confirmRecord();
+                break;
+            case R.id.record_schedule_tv_homescore:
+                showHomeScoreDialog();
+                break;
+            case R.id.record_schedule_tv_opponentscore:
+                showOpponentScoreDialog();
                 break;
         }
     }
@@ -161,5 +185,64 @@ public class RecordScheduleActivity extends AppCompatActivity {
                 Log.d(TAG, "onResponseFailed: " + call.request().url() + " " + t.getMessage());
             }
         });
+    }
+
+    private void showHomeScoreDialog(){
+        final EditText edittext = new EditText(this);
+        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(getString(R.string.homescore));
+        alertDialogBuilder.setView(edittext);
+        alertDialogBuilder.setPositiveButton(getString(R.string.signup_confirm), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                tvHomeScore.setText(edittext.getText());
+            }
+        });
+        alertDialogBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialogBuilder.show();
+    }
+
+    private void showOpponentScoreDialog(){
+        final EditText edittext = new EditText(this);
+        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(getString(R.string.opponentscore));
+        alertDialogBuilder.setView(edittext);
+        alertDialogBuilder.setPositiveButton(getString(R.string.signup_confirm), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                tvOpponentScore.setText(edittext.getText());
+            }
+        });
+        alertDialogBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialogBuilder.show();
+    }
+
+    private void confirmRecord(){
+        String homeScore = tvHomeScore.getText().toString();
+        String opponentScore = tvOpponentScore.getText().toString();
+        if (!homeScore.matches("\\d+(?:\\.\\d+)?")||!opponentScore.matches("\\d+(?:\\.\\d+)?")){
+            ToastUtils.showToast(this,getString(R.string.not_number));
+            return;
+        }
+
+        DatabaseReference reference = mDatabase.getReference("schedules").child(teamCode).child(schedule.getSid());
+        reference.child("homeScore").setValue(homeScore);
+        reference.child("opponentScore").setValue(opponentScore);
+
+        finish();
     }
 }

@@ -124,28 +124,58 @@
     <string name="loading_error">로딩 에러</string>
     <string name="schedule_not_exist">스케줄이 없습니다</string>
     <string-array name="hitter_input">
-        <item>1루타</item>
-        <item>2루타</item>
-        <item>3루타</item>
-        <item>홈런</item>
-        <item>볼넷</item>
-        <item>사구</item>
-        <item>도루</item>
-        <item>삼진</item>
-        <item>땅볼</item>
-        <item>득점</item>
-        <item>타점</item>
+        <item>@string/single</item>
+        <item>@string/two_base</item>
+        <item>@string/three_base</item>
+        <item>@string/homerun</item>
+        <item>@string/walks</item>
+        <item>@string/hit</item>
+        <item>@string/sacrifice_hit</item>
+        <item>@string/stolen</item>
+        <item>@string/strikeouts</item>
+        <item>@string/grounder</item>
+        <item>@string/fly_ball</item>
+        <item>@string/goal</item>
+        <item>@string/rbi</item>
     </string-array>
     <string-array name="pitcher_input">
-        <item>승리</item>
-        <item>패배</item>
-        <item>홀드</item>
-        <item>세이브</item>
-        <item>이닝</item>
-        <item>삼진</item>
-        <item>피안타</item>
-        <item>홈런</item>
-        <item>볼넷</item>
-        <item>사구</item>
+        <item>@string/victory</item>
+        <item>@string/defeat</item>
+        <item>@string/hold</item>
+        <item>@string/save</item>
+        <item>@string/inning</item>
+        <item>@string/strikeouts</item>
+        <item>@string/hits</item>
+        <item>@string/homeruns</item>
+        <item>@string/walks</item>
+        <item>@string/hit_batters</item>
     </string-array>
+    <string name="opponent">상대팀</string>
+    <string name="homescore">홈 스코어</string>
+    <string name="opponentscore">상대팀 스코어</string>
+    <string name="not_number">숫자를 입력해 주세요</string>
+    <string name="record">기록하기</string>
+    <string name="result">결과입력</string>
+    <string name="single">1루타</string>
+    <string name="two_base">2루타</string>
+    <string name="three_base">3루타</string>
+    <string name="homerun">홈런</string>
+    <string name="walks">볼넷</string>
+    <string name="hit">사구</string>
+    <string name="sacrifice_hit">희생타</string>
+    <string name="stolen">도루</string>
+    <string name="strikeouts">삼진</string>
+    <string name="grounder">땅볼</string>
+    <string name="fly_ball">뜬공</string>
+    <string name="goal">득점</string>
+    <string name="rbi">타점</string>
+    <string name="victory">승리</string>
+    <string name="defeat">패배</string>
+    <string name="hold">홀드</string>
+    <string name="save">세이브</string>
+    <string name="inning">이닝</string>
+    <string name="hits">피안타</string>
+    <string name="homeruns">홈런</string>
+    <string name="hit_batters">사구</string>
+    <string name="zero">0</string>
 </resources>

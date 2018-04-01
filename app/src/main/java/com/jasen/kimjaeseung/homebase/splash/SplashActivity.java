@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.Player;
 import com.jasen.kimjaeseung.homebase.data.User;
 import com.jasen.kimjaeseung.homebase.login.LoginActivity;
@@ -65,7 +66,9 @@ public class SplashActivity extends AppCompatActivity {
                 if (user != null) {
                     Log.d(TAG, "signed in : " + user.getUid());
 
-                    checkRegister(user);
+                    String provider = user.getProviders().get(0);
+                    if (provider.contains(getString(R.string.google))||provider.contains(getString(R.string.facebook))) checkRegister(user);
+                    else goToLogin();
 
                 } else {
                     goToLogin();
@@ -82,7 +85,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()) {
-                    //db에 user 정보 없음 firebase,google인 경우
+                    //db에 user 정보 없음 facebook,google인 경우
                     goToMakeTeam();
                     return;
                 }
