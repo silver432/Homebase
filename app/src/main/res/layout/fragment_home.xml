@@ -36,7 +36,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="11dp"
-                    android:text="HomeBase"
                     android:textColor="@color/colorBlack"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -49,7 +48,6 @@
                     android:layout_marginEnd="101dp"
                     android:layout_marginStart="101dp"
                     android:layout_marginTop="5dp"
-                    android:text="우주최강 사회인 야구팀, 홈베이스 저희 팀 짱이에요 얍얍"
                     android:textSize="12sp" />
 
                 <FrameLayout
@@ -191,6 +189,7 @@
                 </FrameLayout>
 
                 <FrameLayout
+                    android:id="@+id/home_fl_nextmatch"
                     android:layout_width="match_parent"
                     android:layout_height="107dp"
                     android:layout_marginTop="31dp"
@@ -215,6 +214,7 @@
                         android:textSize="28sp" />
 
                     <TextView
+                        android:id="@+id/home_tv_day_of_week"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="90dp"
@@ -223,6 +223,7 @@
                         android:textSize="12sp" />
 
                     <View
+                        android:id="@+id/home_view_bar"
                         android:layout_width="3dp"
                         android:layout_height="79dp"
                         android:layout_gravity="center_vertical"
@@ -249,6 +250,7 @@
                         android:text="2월 20일 토요일 오전 9:00" />
 
                     <TextView
+                        android:id="@+id/home_tv_where2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="154dp"
@@ -256,6 +258,7 @@
                         android:text="홈베이스 야구장" />
 
                     <ImageView
+                        android:id="@+id/home_iv_next"
                         android:layout_width="35dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"

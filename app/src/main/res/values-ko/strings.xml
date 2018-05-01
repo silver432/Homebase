@@ -149,6 +149,7 @@
         <item>@string/homeruns</item>
         <item>@string/walks</item>
         <item>@string/hit_batters</item>
+        <item>@string/era</item>
     </string-array>
     <string name="opponent">상대팀</string>
     <string name="homescore">홈 스코어</string>
@@ -178,4 +179,5 @@
     <string name="homeruns">홈런</string>
     <string name="hit_batters">사구</string>
     <string name="zero">0</string>
+    <string name="no_next_match">다음일정이 없습니다</string>
 </resources>

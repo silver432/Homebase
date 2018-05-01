@@ -154,6 +154,7 @@
         <item>@string/homeruns</item>
         <item>@string/walks</item>
         <item>@string/hit_batters</item>
+        <item>@string/era</item>
     </string-array>
     <string name="opponent">Opponent</string>
     <string name="homescore">Home Score</string>
@@ -183,4 +184,5 @@
     <string name="homeruns">Home Runs</string>
     <string name="hit_batters">Hit Batters</string>
     <string name="zero">0</string>
+    <string name="no_next_match">No Next Match</string>
 </resources>
