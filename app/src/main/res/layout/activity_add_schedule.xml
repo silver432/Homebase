@@ -1,111 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/colorBlack"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="#2c2c2c">
 
-    <!--<Button-->
-        <!--android:id="@+id/add_schedule_btn_back"-->
-        <!--android:layout_width="40dp"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="7dp"-->
-        <!--android:background="@drawable/back" />-->
+    <Button
+        android:id="@+id/add_schedule_btn_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/back" />
 
-    <!--<TextView-->
-        <!--android:id="@+id/add_schedule_tv_add"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginTop="17dp"-->
-        <!--android:text="@string/enter_record"-->
-        <!--android:textColor="#ffffff"-->
-        <!--android:textSize="19sp" />-->
+    <TextView
+        android:id="@+id/add_schedule_tv_addschedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:text="@string/add_schedule"
+        android:textColor="#ffffff"
+        android:textSize="19sp" />
 
-    <!--<TextView-->
-        <!--android:id="@+id/add_schedule_tv_confirm"-->
-        <!--android:textSize="14sp"-->
-        <!--android:textColor="@color/colorWhite"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--android:layout_marginEnd="22dp"-->
-        <!--android:text="@string/signup_confirm"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
-
-    <!--<ScrollView-->
-        <!--android:layout_below="@id/add_schedule_tv_confirm"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-        <!--<RelativeLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content">-->
-
-            <!--<android.support.design.widget.TextInputLayout-->
-                <!--android:id="@+id/add_schedule_til_opponent"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginEnd="30dp"-->
-                <!--android:layout_marginStart="30dp"-->
-                <!--android:textColorHint="#ffffff">-->
-
-                <!--<android.support.design.widget.TextInputEditText-->
-                    <!--android:id="@+id/add_schedule_et_opponent"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:hint="@string/opponent"-->
-                    <!--android:inputType="text"-->
-                    <!--android:textColor="@color/colorSky"-->
-                    <!--android:textSize="@dimen/hint_size" />-->
-            <!--</android.support.design.widget.TextInputLayout>-->
-
-        <!--</RelativeLayout>-->
-
-    <!--</ScrollView>-->
-
-
+    <TextView
+        android:id="@+id/add_schedule_tv_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/signup_confirm"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp" />
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_schedule_tv_addschedule"
+        android:layout_marginTop="40dp">
 
-        <android.support.v7.widget.LinearLayoutCompat
-            android:orientation="vertical"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <DatePicker
-                android:id="@+id/add_schedule_dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TimePicker
-                android:id="@+id/add_schedule_tp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:hint="match place"
-                android:id="@+id/add_schedule_et_place"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/add_schedule_til_opponent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:textColorHint="#ffffff">
 
-            <EditText
-                android:hint="opponent team"
-                android:id="@+id/add_schedule_et_opponent"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/add_schedule_et_opponent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/opponent"
+                    android:inputType="text"
+                    android:textColor="@color/colorSky"
+                    android:textSize="@dimen/hint_size" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/add_schedule_til_place"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_schedule_til_opponent"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:textColorHint="#ffffff">
 
-            <Button
-                android:id="@+id/add_schedule_btn_confirm"
-                android:text="confirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/add_schedule_et_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/stadium"
+                    android:inputType="text"
+                    android:textColor="@color/colorSky"
+                    android:textSize="@dimen/hint_size" />
+            </android.support.design.widget.TextInputLayout>
 
-        </android.support.v7.widget.LinearLayoutCompat>
+            <TextView
+                android:id="@+id/add_schedule_tv_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_schedule_til_place"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="34dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/date"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/hint_size" />
+
+            <View
+                android:id="@+id/add_schedule_view_bar"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/add_schedule_tv_date"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/add_schedule_tv_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_schedule_view_bar"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="34dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/time"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/hint_size" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/add_schedule_tv_time"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/colorWhite" />
+        </RelativeLayout>
     </ScrollView>
 
-</android.support.v7.widget.LinearLayoutCompat>
+</RelativeLayout>

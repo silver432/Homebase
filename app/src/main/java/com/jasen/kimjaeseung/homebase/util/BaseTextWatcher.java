@@ -93,6 +93,12 @@ public class BaseTextWatcher implements TextWatcher {
             case R.id.register_team_til_team_name:
                 registerTeamValidateName();
                 break;
+            case R.id.add_schedule_til_opponent:
+                addScheduleValidate();
+                break;
+            case R.id.add_schedule_til_place:
+                addScheduleValidate();
+                break;
         }
     }
 
@@ -231,6 +237,14 @@ public class BaseTextWatcher implements TextWatcher {
             textInputLayout.setError(context.getString(R.string.register_team_name_err_msg));
             textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         } else validate();
+    }
 
+    private void addScheduleValidate(){
+        String str = textInputEditText.getText().toString();
+
+        if (str.isEmpty()){
+            textInputLayout.setError(context.getString(R.string.fill_blank));
+            textInputEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        } else validate();
     }
 }

@@ -180,4 +180,9 @@
     <string name="hit_batters">사구</string>
     <string name="zero">0</string>
     <string name="no_next_match">다음일정이 없습니다</string>
+    <string name="stadium">구장</string>
+    <string name="time">시간</string>
+    <string name="date">날짜</string>
+    <string name="add_schedule">일정 추가</string>
+    <string name="fill_blank">내용을 입력해 주세요</string>
 </resources>

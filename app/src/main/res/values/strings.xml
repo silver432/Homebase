@@ -185,4 +185,9 @@
     <string name="hit_batters">Hit Batters</string>
     <string name="zero">0</string>
     <string name="no_next_match">No Next Match</string>
+    <string name="stadium">Stadium</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
+    <string name="add_schedule">Add Schedule</string>
+    <string name="fill_blank">Please fill the blank</string>
 </resources>
