@@ -103,6 +103,7 @@
     <string name="draw">무</string>
     <string name="lose">패</string>
     <string name="era">방어율</string>
+    <string name="ER">자책점</string>
     <string name="avg">타율</string>
     <string name="bat_top3">타자 TOP 3</string>
     <string name="pitcher_top3">투수 TOP 3</string>
@@ -149,7 +150,7 @@
         <item>@string/homeruns</item>
         <item>@string/walks</item>
         <item>@string/hit_batters</item>
-        <item>@string/era</item>
+        <item>@string/ER</item>
     </string-array>
     <string name="opponent">상대팀</string>
     <string name="homescore">홈 스코어</string>

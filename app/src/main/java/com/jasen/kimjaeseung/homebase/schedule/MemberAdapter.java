@@ -14,6 +14,7 @@ import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +25,18 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.Player;
+import com.jasen.kimjaeseung.homebase.data.Record;
 import com.jasen.kimjaeseung.homebase.data.Schedule;
 import com.jasen.kimjaeseung.homebase.login.LoginActivity;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -43,10 +49,14 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final String TAG = MemberAdapter.class.getSimpleName();
 
     private Context mContext;
+    private String teamCode;
     private List<Player> players = new ArrayList<>();
+    public static boolean isHitterPressed = true;
+    public static SparseArray<Record> records = new SparseArray<>();
 
-    public MemberAdapter(Context context) {
+    public MemberAdapter(Context context, String teamCode) {
         mContext = context;
+        this.teamCode = teamCode;
     }
 
     @Override
@@ -94,7 +104,8 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             record.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showRecordDialog();
+                    records.put(getAdapterPosition(), new Record());  //recreate record if click confirm
+                    showRecordDialog(getAdapterPosition());
                 }
             });
             ll.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +122,7 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             name.setText(player.getName());
         }
 
-        private void showRecordDialog() {
+        private void showRecordDialog(final int position) {   //기록용 dialog
             final AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
             final View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_record_member, null);
 
@@ -119,28 +130,39 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             final TextView tvHitter = (TextView) view.findViewById(R.id.dialog_record_tv_hitter);
             final TextView tvPitcher = (TextView) view.findViewById(R.id.dialog_record_tv_pitcher);
             Button cancelButton = (Button) view.findViewById(R.id.dialog_record_btn_cancel);
+            TextView confirmButton = (TextView) view.findViewById(R.id.dialog_record_tv_confirm);
+            final ListView listView = (ListView) view.findViewById(R.id.dialog_record_lv);
 
             tvName.setText(players.get(getAdapterPosition()).getName());
 
             adb.setView(view);
             final AlertDialog ad = adb.show();
 
-            makeHitterStrong(tvHitter, tvPitcher, view);
+            makeHitterStrong(tvHitter, tvPitcher, view, position);
             tvHitter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View clickView) {
-                    makeHitterStrong(tvHitter, tvPitcher, view);
+                    isHitterPressed = true;
+                    makeHitterStrong(tvHitter, tvPitcher, view, position);
                 }
             });
             tvPitcher.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View clickView) {
-                    makePitcherStrong(tvHitter, tvPitcher, view);
+                    isHitterPressed = false;
+                    makePitcherStrong(tvHitter, tvPitcher, view, position);
                 }
             });
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view) {    //cancel record
+                    records.put(getAdapterPosition(), new Record());
+                    ad.dismiss();
+                }
+            });
+            confirmButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {    //confirm record
                     ad.dismiss();
                 }
             });
@@ -150,7 +172,7 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     }
 
-    private void makeHitterStrong(TextView tvHitter, TextView tvPitcher, View view) {
+    private void makeHitterStrong(TextView tvHitter, TextView tvPitcher, View view, int position) {
         String hitter = (mContext.getString(R.string.hitter));
         SpannableString content = new SpannableString(hitter);
         content.setSpan(new UnderlineSpan(), 0, hitter.length(), 0);
@@ -160,10 +182,10 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         tvPitcher.setText(mContext.getString(R.string.pitcher));
 
         String[] inputHitter = mContext.getResources().getStringArray(R.array.hitter_input);
-        makePHListView(view, inputHitter);
+        makePHListView(view, inputHitter, position);
     }
 
-    private void makePitcherStrong(TextView tvHitter, TextView tvPitcher, View view) {
+    private void makePitcherStrong(TextView tvHitter, TextView tvPitcher, View view, int position) {
         String pitcher = (mContext.getString(R.string.pitcher));
         SpannableString content = new SpannableString(pitcher);
         content.setSpan(new UnderlineSpan(), 0, pitcher.length(), 0);
@@ -173,7 +195,7 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         tvHitter.setText(mContext.getString(R.string.hitter));
 
         String[] inputPitcher = mContext.getResources().getStringArray(R.array.pitcher_input);
-        makePHListView(view, inputPitcher);
+        makePHListView(view, inputPitcher, position);
     }
 
     private void makeHitterStrong2(TextView tvHitter, TextView tvPitcher, View view) {
@@ -212,19 +234,74 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         container.addView(child);
     }
 
-    private void makePHListView(View view, String[] strArray) {
+    private void makePHListView(View view, String[] strArray, int position) {
         ListView listView = (ListView) view.findViewById(R.id.dialog_record_lv);
-        PHAdapter phAdapter = new PHAdapter(mContext);
+        PHAdapter phAdapter = new PHAdapter(mContext,position);
         listView.setAdapter(phAdapter);
 
         phAdapter.itemListClear();
 
         for (int i = 0; i < strArray.length; i++) {
-            phAdapter.addItem(strArray[i], 0);
+            int currentNum = 0;
+            if (isHitterPressed) {  //타자가 선택되었을 때
+                if (i == 0) { //1루타
+                    currentNum = records.get(position).getSingleHit();
+                } else if (i == 1) {    //2루타
+                    currentNum = records.get(position).getDoubleHit();
+                } else if (i == 2) { //3루타
+                    currentNum = records.get(position).getTripleHit();
+                } else if (i == 3) { //홈런
+                    currentNum = records.get(position).getHomeRun();
+                } else if (i == 4) { //볼넷
+                    currentNum = records.get(position).getBaseOnBalls();
+                } else if (i == 5) { //사구
+                    currentNum = records.get(position).getHitByPitch();
+                } else if (i == 6) { //희생타
+                    currentNum = records.get(position).getSacrificeHit();
+                } else if (i == 7) { //도루
+                    currentNum = records.get(position).getStolenBase();
+                } else if (i == 8) { //삼진
+                    currentNum = records.get(position).getStrikeOut();
+                } else if (i == 9) { //땅볼
+                    currentNum = records.get(position).getGroundBall();
+                    ;
+                } else if (i == 10) {    //뜬공
+                    currentNum = records.get(position).getFlyBall();
+                } else if (i == 11) {   //득점
+                    currentNum = records.get(position).getRun();
+                } else if (i == 12) {   //타점
+                    currentNum = records.get(position).getRBI();
+                }
+            } else { //투수가 선택되었을 때
+                if (i == 0) {   //승리
+                    currentNum = records.get(position).getWin();
+                } else if (i == 1) { //패배
+                    currentNum = records.get(position).getLose();
+                } else if (i == 2) { //홀드
+                    currentNum = records.get(position).getHold();
+                } else if (i == 3) { //세이브
+                    currentNum = records.get(position).getSave();
+                } else if (i == 4) { //이닝
+                    currentNum = records.get(position).getInning();
+                } else if (i == 5) { //삼진
+                    currentNum = records.get(position).getStrikeOuts();
+                } else if (i == 6) { //피안타
+                    currentNum = records.get(position).getHits();
+                } else if (i == 7) { //홈런
+                    currentNum = records.get(position).getHomeRuns();
+                } else if (i == 8) { //볼넷
+                    currentNum = records.get(position).getWalks();
+                } else if (i == 9) { //사구
+                    currentNum = records.get(position).getHitBatters();
+                } else if (i == 10) {    //자책점
+                    currentNum = records.get(position).getER();
+                }
+            }
+            phAdapter.addItem(strArray[i], currentNum);
         }
     }
 
-    private void showMemberRecord(int position) {
+    private void showMemberRecord(int position) {   //보여주기용 dialog
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(mContext);
         final View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_member_bottom, null);
 

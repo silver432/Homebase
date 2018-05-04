@@ -50,6 +50,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.jasen.kimjaeseung.homebase.schedule.MemberAdapter.records;
+
 /**
  * Created by kimjaeseung on 2018. 3. 14..
  */
@@ -77,6 +79,7 @@ public class RecordScheduleActivity extends AppCompatActivity {
     private Schedule schedule;
     private String teamCode;
     private FirebaseDatabase mDatabase;
+    List<Player> players = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -136,7 +139,7 @@ public class RecordScheduleActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        MemberAdapter memberAdapter = new MemberAdapter(this);
+        MemberAdapter memberAdapter = new MemberAdapter(this,teamCode);
         memberAdapter.setItemList(players);
 
         recyclerView.setAdapter(memberAdapter);
@@ -146,7 +149,6 @@ public class RecordScheduleActivity extends AppCompatActivity {
         ProgressUtils.show(this, R.string.loading);
 
         //멤버 불러오기
-        final List<Player> players = new ArrayList<>();
         CloudService service = CloudService.retrofit.create(CloudService.class);
         Call<Team> call = service.callTeam(teamCode);
         call.enqueue(new Callback<Team>() {
@@ -164,8 +166,11 @@ public class RecordScheduleActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(team.getMembers().toString());
                         Iterator iterator = jsonObject.keys();
                         while (iterator.hasNext()){
-                            JsonElement jsonElement = new JsonParser().parse(jsonObject.get(iterator.next().toString()).toString());
+                            String key = (String)iterator.next();
+
+                            JsonElement jsonElement = new JsonParser().parse(jsonObject.get(key).toString());
                             Player player = new Gson().fromJson(jsonElement,Player.class);
+                            player.setPid(key);
                             players.add(player);
                         }
                     }
@@ -242,6 +247,9 @@ public class RecordScheduleActivity extends AppCompatActivity {
         DatabaseReference reference = mDatabase.getReference("schedules").child(teamCode).child(schedule.getSid());
         reference.child("homeScore").setValue(homeScore);
         reference.child("opponentScore").setValue(opponentScore);
+        for (int i=0;i<players.size();i++){
+            reference.child("record").child(players.get(i).getPid()).setValue(records.get(i));
+        }
 
         finish();
     }

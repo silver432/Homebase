@@ -18,6 +18,7 @@ public class Player {
     private String joinedAt;
     private String outedAt;
     private String teamCode;
+    private String pid;
 
     public Player() {
     }
@@ -122,5 +123,13 @@ public class Player {
 
     public void setTeamCode(String teamCode) {
         this.teamCode = teamCode;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 }

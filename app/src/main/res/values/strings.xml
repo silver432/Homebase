@@ -107,6 +107,7 @@
     <string name="draw">Draw</string>
     <string name="lose">Lose</string>
     <string name="era">ERA</string>
+    <string name="ER">ER</string>
     <string name="avg">AVG</string>
     <string name="bat_top3">Batter TOP 3</string>
     <string name="pitcher_top3">Pitcher TOP 3</string>
@@ -154,7 +155,7 @@
         <item>@string/homeruns</item>
         <item>@string/walks</item>
         <item>@string/hit_batters</item>
-        <item>@string/era</item>
+        <item>@string/ER</item>
     </string-array>
     <string name="opponent">Opponent</string>
     <string name="homescore">Home Score</string>
