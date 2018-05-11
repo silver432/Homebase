@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -102,14 +103,14 @@ public class RecordScheduleActivity extends AppCompatActivity {
         tvOpponent.setText(schedule.getOpponentTeam());
         tvWhen.setText(schedule.getMatchDate());
         tvWhere.setText(schedule.getMatchPlace());
-        if (!schedule.getHomeScore().equals(String.valueOf(-1))&&!schedule.getOpponentScore().equals(String.valueOf(-1))){
+        if (!schedule.getHomeScore().equals(String.valueOf(-1)) && !schedule.getOpponentScore().equals(String.valueOf(-1))) {
             tvHomeScore.setText(schedule.getHomeScore());
             tvOpponentScore.setText(schedule.getOpponentScore());
         }
 
     }
 
-    @OnClick({R.id.record_schedule_btn_back, R.id.record_schedule_tv_confirm,R.id.record_schedule_tv_homescore,R.id.record_schedule_tv_opponentscore})
+    @OnClick({R.id.record_schedule_btn_back, R.id.record_schedule_tv_confirm, R.id.record_schedule_tv_homescore, R.id.record_schedule_tv_opponentscore})
     public void mOnClick(View view) {
         switch (view.getId()) {
             case R.id.record_schedule_btn_back:
@@ -119,10 +120,10 @@ public class RecordScheduleActivity extends AppCompatActivity {
                 confirmRecord();
                 break;
             case R.id.record_schedule_tv_homescore:
-                showHomeScoreDialog();
+                showScoreDialog();
                 break;
             case R.id.record_schedule_tv_opponentscore:
-                showOpponentScoreDialog();
+                showScoreDialog();
                 break;
         }
     }
@@ -139,13 +140,14 @@ public class RecordScheduleActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        MemberAdapter memberAdapter = new MemberAdapter(this,teamCode);
+        MemberAdapter memberAdapter = new MemberAdapter(this, teamCode);
         memberAdapter.setItemList(players);
 
         recyclerView.setAdapter(memberAdapter);
     }
 
     private void getPlayers() {
+        players.clear();
         ProgressUtils.show(this, R.string.loading);
 
         //멤버 불러오기
@@ -154,7 +156,7 @@ public class RecordScheduleActivity extends AppCompatActivity {
         call.enqueue(new Callback<Team>() {
             @Override
             public void onResponse(Call<Team> call, Response<Team> response) {
-                if (!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     ProgressUtils.dismiss();
                     ToastUtils.showToast(getApplicationContext(), getString(R.string.loading_error));
                     return;
@@ -165,11 +167,11 @@ public class RecordScheduleActivity extends AppCompatActivity {
                     if (team != null) {
                         JSONObject jsonObject = new JSONObject(team.getMembers().toString());
                         Iterator iterator = jsonObject.keys();
-                        while (iterator.hasNext()){
-                            String key = (String)iterator.next();
+                        while (iterator.hasNext()) {
+                            String key = (String) iterator.next();
 
                             JsonElement jsonElement = new JsonParser().parse(jsonObject.get(key).toString());
-                            Player player = new Gson().fromJson(jsonElement,Player.class);
+                            Player player = new Gson().fromJson(jsonElement, Player.class);
                             player.setPid(key);
                             players.add(player);
                         }
@@ -192,7 +194,7 @@ public class RecordScheduleActivity extends AppCompatActivity {
         });
     }
 
-    private void showHomeScoreDialog(){
+    private void showHomeScoreDialog() {
         final EditText edittext = new EditText(this);
         edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
 
@@ -214,7 +216,7 @@ public class RecordScheduleActivity extends AppCompatActivity {
         alertDialogBuilder.show();
     }
 
-    private void showOpponentScoreDialog(){
+    private void showOpponentScoreDialog() {
         final EditText edittext = new EditText(this);
         edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
 
@@ -236,19 +238,51 @@ public class RecordScheduleActivity extends AppCompatActivity {
         alertDialogBuilder.show();
     }
 
-    private void confirmRecord(){
+    private void showScoreDialog() {
+        final View view = LayoutInflater.from(this).inflate(R.layout.dialog_input_score, null);
+
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(view);
+        final AlertDialog ad = alertDialogBuilder.show();
+
+        final EditText etHome = view.findViewById(R.id.dialog_input_score_et_home);
+        final EditText etOpponent = view.findViewById(R.id.dialog_input_score_et_opponent);
+        TextView tvConfirm = view.findViewById(R.id.dialog_input_score_tv_confirm);
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String home = etHome.getText().toString();
+                String opponent = etOpponent.getText().toString();
+                if (home.matches("")) tvHomeScore.setText(getString(R.string.zero));
+                else tvHomeScore.setText(etHome.getText().toString());
+                if (opponent.matches("")) tvOpponentScore.setText(getString(R.string.zero));
+                else tvOpponentScore.setText(opponent);
+                ad.dismiss();
+            }
+        });
+        Button btnCancel = view.findViewById(R.id.dialog_input_score_btn_cancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ad.dismiss();
+            }
+        });
+
+    }
+
+    private void confirmRecord() {
         String homeScore = tvHomeScore.getText().toString();
         String opponentScore = tvOpponentScore.getText().toString();
-        if (!homeScore.matches("\\d+(?:\\.\\d+)?")||!opponentScore.matches("\\d+(?:\\.\\d+)?")){
-            ToastUtils.showToast(this,getString(R.string.not_number));
+        if (!homeScore.matches("\\d+(?:\\.\\d+)?") || !opponentScore.matches("\\d+(?:\\.\\d+)?")) {
+            ToastUtils.showToast(this, getString(R.string.not_number));
             return;
         }
 
         DatabaseReference reference = mDatabase.getReference("schedules").child(teamCode).child(schedule.getSid());
         reference.child("homeScore").setValue(homeScore);
         reference.child("opponentScore").setValue(opponentScore);
-        for (int i=0;i<players.size();i++){
-            reference.child("record").child(players.get(i).getPid()).setValue(records.get(i));
+        for (int i = 0; i < players.size(); i++) {
+            reference.child("records").child(players.get(i).getPid()).setValue(records.get(i));
         }
 
         finish();

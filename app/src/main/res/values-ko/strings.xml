@@ -186,4 +186,7 @@
     <string name="date">날짜</string>
     <string name="add_schedule">일정 추가</string>
     <string name="fill_blank">내용을 입력해 주세요</string>
+    <string name="hometeam">우리팀</string>
+    <string name="awayteam">상대팀</string>
+    <string name="inputscore">경기점수 입력</string>
 </resources>

@@ -138,6 +138,7 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             adb.setView(view);
             final AlertDialog ad = adb.show();
 
+            isHitterPressed = true;
             makeHitterStrong(tvHitter, tvPitcher, view, position);
             tvHitter.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -236,7 +237,7 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private void makePHListView(View view, String[] strArray, int position) {
         ListView listView = (ListView) view.findViewById(R.id.dialog_record_lv);
-        PHAdapter phAdapter = new PHAdapter(mContext,position);
+        PHAdapter phAdapter = new PHAdapter(mContext, position);
         listView.setAdapter(phAdapter);
 
         phAdapter.itemListClear();

@@ -191,4 +191,7 @@
     <string name="date">Date</string>
     <string name="add_schedule">Add Schedule</string>
     <string name="fill_blank">Please fill the blank</string>
+    <string name="hometeam">HomeTeam</string>
+    <string name="awayteam">AwayTeam</string>
+    <string name="inputscore">Input Score</string>
 </resources>
