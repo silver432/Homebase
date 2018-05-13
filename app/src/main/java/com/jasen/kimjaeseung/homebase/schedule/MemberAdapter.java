@@ -25,21 +25,39 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.jasen.kimjaeseung.homebase.R;
 import com.jasen.kimjaeseung.homebase.data.Player;
 import com.jasen.kimjaeseung.homebase.data.Record;
 import com.jasen.kimjaeseung.homebase.data.Schedule;
+import com.jasen.kimjaeseung.homebase.data.Team;
 import com.jasen.kimjaeseung.homebase.login.LoginActivity;
+import com.jasen.kimjaeseung.homebase.network.CloudService;
+import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by kimjaeseung on 2018. 3. 15..
@@ -50,13 +68,18 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private Context mContext;
     private String teamCode;
+    private String sid;
     private List<Player> players = new ArrayList<>();
+    private List<Record> recordList = new ArrayList<>();
     public static boolean isHitterPressed = true;
     public static SparseArray<Record> records = new SparseArray<>();
 
-    public MemberAdapter(Context context, String teamCode) {
+    public MemberAdapter(Context context, String teamCode, String sid) {
         mContext = context;
         this.teamCode = teamCode;
+        this.sid = sid;
+
+        getRecords();
     }
 
     @Override
@@ -199,7 +222,7 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         makePHListView(view, inputPitcher, position);
     }
 
-    private void makeHitterStrong2(TextView tvHitter, TextView tvPitcher, View view) {
+    private void makeHitterStrong2(TextView tvHitter, TextView tvPitcher, View view, int position) {
         String hitter = (mContext.getString(R.string.hitter));
         SpannableString content = new SpannableString(hitter);
         content.setSpan(new UnderlineSpan(), 0, hitter.length(), 0);
@@ -212,12 +235,45 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 (Context.LAYOUT_INFLATER_SERVICE);
         View child = inflater.inflate(R.layout.view_hitter, null);
 
+        TextView tvHitterSingle= child.findViewById(R.id.view_hitter_tv_single);
+        TextView tvHitterDouble =child.findViewById(R.id.view_hitter_tv_two_base);
+        TextView tvHitterTriple=child.findViewById(R.id.view_hitter_tv_three_base);
+        TextView tvHitterHomeRun=child.findViewById(R.id.view_hitter_tv_homerun);
+        TextView tvHitterWalks=child.findViewById(R.id.view_hitter_tv_walks);
+        TextView tvHitterSacrifice=child.findViewById(R.id.view_hitter_tv_sacrifice_hit);
+        TextView tvHitterStrikeOuts=child.findViewById(R.id.view_hitter_tv_strikeoouts);
+        TextView tvHitterGrounder=child.findViewById(R.id.view_hitter_tv_grounder);
+        TextView tvHitterFlyBall=child.findViewById(R.id.view_hitter_tv_fly_ball);
+        TextView tvHitterStolen=child.findViewById(R.id.view_hitter_tv_stolen);
+        TextView tvHitterHit=child.findViewById(R.id.view_hitter_tv_hit);
+        TextView tvHitterGoal=child.findViewById(R.id.view_hitter_tv_goal);
+        TextView tvHitterRBI=child.findViewById(R.id.view_hitter_tv_rbi);
+
+        //해당 선수에관한 record 가져오기
+        Record record = getRecord(position);
+        if (record !=null){
+            //hitter 정보표시
+            tvHitterSingle.setText(String.valueOf(record.getSingleHit()));
+            tvHitterDouble.setText(String.valueOf(record.getDoubleHit()));
+            tvHitterTriple.setText(String.valueOf(record.getTripleHit()));
+            tvHitterHomeRun.setText(String.valueOf(record.getHomeRun()));
+            tvHitterWalks.setText(String.valueOf(record.getBaseOnBalls()));
+            tvHitterSacrifice.setText(String.valueOf(record.getSacrificeHit()));
+            tvHitterStrikeOuts.setText(String.valueOf(record.getStrikeOut()));
+            tvHitterGrounder.setText(String.valueOf(record.getGroundBall()));
+            tvHitterFlyBall.setText(String.valueOf(record.getFlyBall()));
+            tvHitterStolen.setText(String.valueOf(record.getStolenBase()));
+            tvHitterHit.setText(String.valueOf(record.getHitByPitch()));
+            tvHitterGoal.setText(String.valueOf(record.getRun()));
+            tvHitterRBI.setText(String.valueOf(record.getRBI()));
+        }
+
         LinearLayout container = view.findViewById(R.id.dialog_bottom_member_ll_container);
         container.removeAllViews();
         container.addView(child);
     }
 
-    private void makePitcherStrong2(TextView tvHitter, TextView tvPitcher, View view) {
+    private void makePitcherStrong2(TextView tvHitter, TextView tvPitcher, View view, int position) {
         String pitcher = (mContext.getString(R.string.pitcher));
         SpannableString content = new SpannableString(pitcher);
         content.setSpan(new UnderlineSpan(), 0, pitcher.length(), 0);
@@ -229,6 +285,33 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
         View child = inflater.inflate(R.layout.view_pitcher, null);
+
+        TextView victory=child.findViewById(R.id.view_pitcher_tv_victory);
+        TextView defeat=child.findViewById(R.id.view_pitcher_tv_defeat);
+        TextView hold=child.findViewById(R.id.view_pitcher_tv_hold);
+        TextView homerun=child.findViewById(R.id.view_pitcher_tv_homerun);
+        TextView walks=child.findViewById(R.id.view_pitcher_tv_walks);
+        TextView hitBatters=child.findViewById(R.id.view_pitcher_tv_hit);
+        TextView hits = child.findViewById(R.id.view_pitcher_tv_hits);
+        TextView save = child.findViewById(R.id.view_pitcher_tv_save);
+        TextView inning=child.findViewById(R.id.view_pitcher_tv_inning);
+        TextView strikeOut=child.findViewById(R.id.view_pitcher_tv_strikeouts);
+        TextView ER=child.findViewById(R.id.view_pitcher_er);
+
+        Record record = getRecord(position);
+        if (record!=null){
+            victory.setText(String.valueOf(record.getWin()));
+            defeat.setText(String.valueOf(record.getLose()));
+            hold.setText(String.valueOf(record.getHold()));
+            homerun.setText(String.valueOf(record.getHomeRuns()));
+            walks.setText(String.valueOf(record.getWalks()));
+            hitBatters.setText(String.valueOf(record.getHitBatters()));
+            hits.setText(String.valueOf(record.getHits()));
+            save.setText(String.valueOf(record.getSave()));
+            inning.setText(String.valueOf(record.getInning()));
+            strikeOut.setText(String.valueOf(record.getStrikeOuts()));
+            ER.setText(String.valueOf(record.getER()));
+        }
 
         LinearLayout container = view.findViewById(R.id.dialog_bottom_member_ll_container);
         container.removeAllViews();
@@ -302,7 +385,7 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private void showMemberRecord(int position) {   //보여주기용 dialog
+    private void showMemberRecord(final int position) {   //보여주기용 dialog
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(mContext);
         final View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_member_bottom, null);
 
@@ -313,20 +396,20 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         tvName.setText(players.get(position).getName());
 
-        bottomSheetDialog.setContentView(view);
-        bottomSheetDialog.show();
-
-        makeHitterStrong2(tvHitter, tvPitcher, view);
+        isHitterPressed = true;
+        makeHitterStrong2(tvHitter, tvPitcher, view, position);
         tvHitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View clickView) {
-                makeHitterStrong2(tvHitter, tvPitcher, view);
+                isHitterPressed = true;
+                makeHitterStrong2(tvHitter, tvPitcher, view, position);
             }
         });
         tvPitcher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View clickView) {
-                makePitcherStrong2(tvHitter, tvPitcher, view);
+                isHitterPressed = false;
+                makePitcherStrong2(tvHitter, tvPitcher, view, position);
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -335,5 +418,49 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 bottomSheetDialog.dismiss();
             }
         });
+
+        bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.show();
+    }
+
+    private void getRecords() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules").child(teamCode).child(sid).child("records");
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Record record = dataSnapshot.getValue(Record.class);
+                record.setUid(dataSnapshot.getKey());
+                recordList.add(record);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private Record getRecord(int position) {
+        for (int i = 0; i < recordList.size(); i++) {
+            if (recordList.get(i).getUid().equals(players.get(position).getPid())) {
+                return recordList.get(i);
+            }
+        }
+        return null;
     }
 }

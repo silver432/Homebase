@@ -16,7 +16,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_single"
                 android:text="@string/single"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -24,6 +23,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_single"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -39,7 +39,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_two_base"
                 android:text="@string/two_base"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,6 +46,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_two_base"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -62,7 +62,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_three_base"
                 android:text="@string/three_base"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,6 +69,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_three_base"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -90,7 +90,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_homerun"
                 android:text="@string/homerun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,6 +97,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_homerun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -113,7 +113,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_walks"
                 android:text="@string/walks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,6 +120,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_walks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -136,7 +136,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_sacrifice_hit"
                 android:text="@string/sacrifice_hit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -144,6 +143,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_sacrifice_hit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -164,7 +164,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_strikeoouts"
                 android:text="@string/strikeouts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -172,6 +171,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_strikeoouts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -187,7 +187,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_grounder"
                 android:text="@string/grounder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -195,6 +194,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_grounder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -210,7 +210,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_fly_ball"
                 android:text="@string/fly_ball"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -218,6 +217,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_fly_ball"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -238,7 +238,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_stolen"
                 android:text="@string/stolen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -246,6 +245,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_stolen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -261,7 +261,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_hit"
                 android:text="@string/hit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -269,6 +268,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_hit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -284,7 +284,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_goal"
                 android:text="@string/goal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -292,6 +291,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_goal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
@@ -307,7 +307,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/view_hitter_tv_rbi"
                 android:text="@string/rbi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -315,6 +314,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/view_hitter_tv_rbi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zero"

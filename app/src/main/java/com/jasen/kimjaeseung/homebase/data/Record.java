@@ -29,6 +29,7 @@ public class Record {
     private int tripleHit;
     private int walks;
     private int win;
+    private String uid;
 
     public Record() {
         this.ER = 0;
@@ -274,5 +275,13 @@ public class Record {
 
     public void setWin(int win) {
         this.win = win;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

@@ -140,7 +140,7 @@ public class RecordScheduleActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        MemberAdapter memberAdapter = new MemberAdapter(this, teamCode);
+        MemberAdapter memberAdapter = new MemberAdapter(this, teamCode,schedule.getSid());
         memberAdapter.setItemList(players);
 
         recyclerView.setAdapter(memberAdapter);
@@ -194,49 +194,49 @@ public class RecordScheduleActivity extends AppCompatActivity {
         });
     }
 
-    private void showHomeScoreDialog() {
-        final EditText edittext = new EditText(this);
-        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle(getString(R.string.homescore));
-        alertDialogBuilder.setView(edittext);
-        alertDialogBuilder.setPositiveButton(getString(R.string.signup_confirm), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                tvHomeScore.setText(edittext.getText());
-            }
-        });
-        alertDialogBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        alertDialogBuilder.show();
-    }
-
-    private void showOpponentScoreDialog() {
-        final EditText edittext = new EditText(this);
-        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle(getString(R.string.opponentscore));
-        alertDialogBuilder.setView(edittext);
-        alertDialogBuilder.setPositiveButton(getString(R.string.signup_confirm), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                tvOpponentScore.setText(edittext.getText());
-            }
-        });
-        alertDialogBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        alertDialogBuilder.show();
-    }
+//    private void showHomeScoreDialog() {
+//        final EditText edittext = new EditText(this);
+//        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+//
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+//        alertDialogBuilder.setTitle(getString(R.string.homescore));
+//        alertDialogBuilder.setView(edittext);
+//        alertDialogBuilder.setPositiveButton(getString(R.string.signup_confirm), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                tvHomeScore.setText(edittext.getText());
+//            }
+//        });
+//        alertDialogBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//            }
+//        });
+//        alertDialogBuilder.show();
+//    }
+//
+//    private void showOpponentScoreDialog() {
+//        final EditText edittext = new EditText(this);
+//        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+//
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+//        alertDialogBuilder.setTitle(getString(R.string.opponentscore));
+//        alertDialogBuilder.setView(edittext);
+//        alertDialogBuilder.setPositiveButton(getString(R.string.signup_confirm), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                tvOpponentScore.setText(edittext.getText());
+//            }
+//        });
+//        alertDialogBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//            }
+//        });
+//        alertDialogBuilder.show();
+//    }
 
     private void showScoreDialog() {
         final View view = LayoutInflater.from(this).inflate(R.layout.dialog_input_score, null);

@@ -134,7 +134,7 @@ public class PHAdapter extends BaseAdapter {
                         records.get(memberPosition).setER(number);
                     }
                 }
-                num.setText(String.valueOf(number));
+                phListItem.setNum(number);
             }
         });
         //plus click event
@@ -196,7 +196,7 @@ public class PHAdapter extends BaseAdapter {
                         records.get(memberPosition).setER(number);
                     }
                 }
-                num.setText(String.valueOf(number));
+                phListItem.setNum(number);
             }
         });
 
