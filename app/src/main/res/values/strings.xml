@@ -194,4 +194,6 @@
     <string name="hometeam">HomeTeam</string>
     <string name="awayteam">AwayTeam</string>
     <string name="inputscore">Input Score</string>
+    <string name="change_schedule">Change Schedule</string>
+    <string name="delete_schedule">Delete Schedule</string>
 </resources>

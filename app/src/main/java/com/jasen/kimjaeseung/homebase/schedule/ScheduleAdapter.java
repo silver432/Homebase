@@ -2,6 +2,8 @@ package com.jasen.kimjaeseung.homebase.schedule;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -18,6 +22,7 @@ import com.jasen.kimjaeseung.homebase.data.Schedule;
 import com.jasen.kimjaeseung.homebase.data.Team;
 import com.jasen.kimjaeseung.homebase.login.LoginActivity;
 import com.jasen.kimjaeseung.homebase.network.CloudService;
+import com.jasen.kimjaeseung.homebase.util.DPUtills;
 import com.jasen.kimjaeseung.homebase.util.DateUtils;
 import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
@@ -40,6 +45,8 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * Created by kimjaeseung on 2018. 3. 10..
@@ -134,7 +141,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView date;
         private TextView place;
         private TextView record;
-
+        private LinearLayoutCompat linearLayoutCompat;
 
         public ScheduleViewHolder(final View itemView) {
             super(itemView);
@@ -145,6 +152,43 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             date = (TextView) itemView.findViewById(R.id.listitem_tv_date);
             place = (TextView) itemView.findViewById(R.id.listitem_tv_place);
             record = (TextView) itemView.findViewById(R.id.listitem_tv_record);
+            linearLayoutCompat = itemView.findViewById(R.id.listitem_schedule_ll);
+
+            //inner layout
+            final View tmpView = LayoutInflater.from(mContext).inflate(R.layout.dialog_control_schedule, null);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
+            alertDialogBuilder.setView(tmpView);
+            final AlertDialog alertDialog = alertDialogBuilder.create();
+
+            LinearLayoutCompat llChange = tmpView.findViewById(R.id.dialog_control_schedule_ll_change);
+            LinearLayoutCompat llDelete = tmpView.findViewById(R.id.dialog_control_schedule_ll_delete);
+            llChange.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    goToRecordSchedule(schedules.get(position));
+                    if (alertDialog.isShowing()) alertDialog.dismiss();
+                }
+            });
+            llDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
+                    databaseReference.child(teamCode).child(schedules.get(getAdapterPosition()).getSid()).removeValue();
+                    if (alertDialog.isShowing()) alertDialog.dismiss();
+                }
+            });
+
+            linearLayoutCompat.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    alertDialog.show();
+                    alertDialog.getWindow().setLayout(DPUtills.getPx(mContext, 250), WRAP_CONTENT);
+                    return true;
+                }
+            });
+
 
             record.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -201,6 +245,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView date;
         private TextView place;
         private TextView record;
+        private LinearLayoutCompat linearLayoutCompat;
 
         public FirstScheduleViewHolder(View itemView) {
             super(itemView);
@@ -213,6 +258,41 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             date = (TextView) itemView.findViewById(R.id.listitem_first_tv_date);
             place = (TextView) itemView.findViewById(R.id.listitem_first_tv_place);
             record = (TextView) itemView.findViewById(R.id.listitem_first_tv_record);
+            linearLayoutCompat = itemView.findViewById(R.id.listitem_schedule_first_ll);
+
+            //inner layout
+            final View tmpView = LayoutInflater.from(mContext).inflate(R.layout.dialog_control_schedule, null);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
+            alertDialogBuilder.setView(tmpView);
+            final AlertDialog alertDialog = alertDialogBuilder.create();
+
+            LinearLayoutCompat llChange = tmpView.findViewById(R.id.dialog_control_schedule_ll_change);
+            LinearLayoutCompat llDelete = tmpView.findViewById(R.id.dialog_control_schedule_ll_delete);
+            llChange.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    goToRecordSchedule(schedules.get(position));
+                    if (alertDialog.isShowing()) alertDialog.dismiss();
+                }
+            });
+            llDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
+                    databaseReference.child(teamCode).child(schedules.get(getAdapterPosition()).getSid()).removeValue();
+                }
+            });
+
+            linearLayoutCompat.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    alertDialog.show();
+                    alertDialog.getWindow().setLayout(DPUtills.getPx(mContext, 250), WRAP_CONTENT);
+                    return true;
+                }
+            });
 
             record.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -259,7 +339,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             date.setText(schedule.getMatchDate());
             place.setText(schedule.getMatchPlace());
             String strRecord = "";
-            Log.d(TAG,schedule.getHomeScore()+" "+schedule.getOpponentScore());
             if (!schedule.getHomeScore().equals(String.valueOf(-1)) && !schedule.getOpponentScore().equals(String.valueOf(-1))) {
                 strRecord = schedule.getHomeScore() + " : " + schedule.getOpponentScore();
                 record.setTextSize(20);

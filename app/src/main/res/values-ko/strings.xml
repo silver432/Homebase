@@ -189,4 +189,6 @@
     <string name="hometeam">우리팀</string>
     <string name="awayteam">상대팀</string>
     <string name="inputscore">경기점수 입력</string>
+    <string name="change_schedule">일정 수정하기</string>
+    <string name="delete_schedule">일정 삭제하기</string>
 </resources>
