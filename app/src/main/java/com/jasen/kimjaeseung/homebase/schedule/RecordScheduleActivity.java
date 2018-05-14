@@ -60,6 +60,8 @@ import static com.jasen.kimjaeseung.homebase.schedule.MemberAdapter.records;
 public class RecordScheduleActivity extends AppCompatActivity {
     private static final String TAG = RecordScheduleActivity.class.getSimpleName();
 
+    @BindView(R.id.record_schedule_tv_record)
+    TextView tvRecord;
     @BindView(R.id.record_schedule_btn_back)
     Button btnBack;
     @BindView(R.id.record_schedule_tv_confirm)
@@ -79,6 +81,7 @@ public class RecordScheduleActivity extends AppCompatActivity {
 
     private Schedule schedule;
     private String teamCode;
+    private boolean isChange;
     private FirebaseDatabase mDatabase;
     List<Player> players = new ArrayList<>();
 
@@ -98,8 +101,10 @@ public class RecordScheduleActivity extends AppCompatActivity {
         //get data
         schedule = (Schedule) getIntent().getSerializableExtra("schedule");
         teamCode = getIntent().getStringExtra("teamCode");
+        isChange = getIntent().getBooleanExtra("ischange",false);
 
         //init view
+        if (isChange) tvRecord.setText(this.getString(R.string.change_schedule));
         tvOpponent.setText(schedule.getOpponentTeam());
         tvWhen.setText(schedule.getMatchDate());
         tvWhere.setText(schedule.getMatchPlace());
@@ -140,7 +145,7 @@ public class RecordScheduleActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        MemberAdapter memberAdapter = new MemberAdapter(this, teamCode,schedule.getSid());
+        MemberAdapter memberAdapter = new MemberAdapter(this, teamCode, schedule.getSid());
         memberAdapter.setItemList(players);
 
         recyclerView.setAdapter(memberAdapter);

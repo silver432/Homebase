@@ -167,7 +167,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    goToRecordSchedule(schedules.get(position));
+                    goToRecordScheduleChange(schedules.get(position));
                     if (alertDialog.isShowing()) alertDialog.dismiss();
                 }
             });
@@ -273,7 +273,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    goToRecordSchedule(schedules.get(position));
+                    goToRecordScheduleChange(schedules.get(position));
                     if (alertDialog.isShowing()) alertDialog.dismiss();
                 }
             });
@@ -351,6 +351,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         final Intent intent = new Intent(mContext, RecordScheduleActivity.class);
         intent.putExtra("schedule", schedule);
         intent.putExtra("teamCode", teamCode);
+        mContext.startActivity(intent);
+    }
+
+    private void goToRecordScheduleChange(Schedule schedule) {
+        final Intent intent = new Intent(mContext, RecordScheduleActivity.class);
+        intent.putExtra("schedule", schedule);
+        intent.putExtra("teamCode", teamCode);
+        intent.putExtra("ischange",true);
         mContext.startActivity(intent);
     }
 }
