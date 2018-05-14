@@ -295,7 +295,8 @@ public class HomeFragment extends Fragment {
     }
 
     private String calendarToString(Calendar calendar) {
-        return calendar.get(Calendar.YEAR) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.DATE) + " " + getDOW(calendar.get(Calendar.DAY_OF_WEEK));
+        int month = calendar.get(Calendar.MONTH)+1;
+        return calendar.get(Calendar.YEAR) + "." + month + "." + calendar.get(Calendar.DATE) + " " + getDOW(calendar.get(Calendar.DAY_OF_WEEK));
     }
 
 }
