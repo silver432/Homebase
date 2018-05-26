@@ -196,4 +196,7 @@
     <string name="inputscore">Input Score</string>
     <string name="change_schedule">Change Schedule</string>
     <string name="delete_schedule">Delete Schedule</string>
+    <string name="no_record">No Record</string>
+    <string name="no_record_1">Oh! There is no registered schedule yet.</string>
+    <string name="no_record_2">How about this weekend?</string>
 </resources>

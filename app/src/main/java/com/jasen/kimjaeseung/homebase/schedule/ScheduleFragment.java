@@ -9,16 +9,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,6 +39,7 @@ import com.jasen.kimjaeseung.homebase.login.EnterTeamActivity;
 import com.jasen.kimjaeseung.homebase.login.LoginActivity;
 import com.jasen.kimjaeseung.homebase.main.MainActivity;
 import com.jasen.kimjaeseung.homebase.network.CloudService;
+import com.jasen.kimjaeseung.homebase.util.DateUtils;
 import com.jasen.kimjaeseung.homebase.util.ProgressUtils;
 import com.jasen.kimjaeseung.homebase.util.ToastUtils;
 import com.squareup.picasso.Picasso;
@@ -45,6 +50,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -83,6 +89,10 @@ public class ScheduleFragment extends Fragment {
     FloatingActionButton floatingActionButton;
     @BindView(R.id.schedule_rv)
     RecyclerView recyclerView;
+    @BindView(R.id.schedule_ll_nodata)
+    LinearLayoutCompat linearLayoutCompat;
+    @BindView(R.id.schedule_ll_recent5)
+    LinearLayoutCompat llRecent5;
 
     public ScheduleFragment() {
     }
@@ -130,7 +140,6 @@ public class ScheduleFragment extends Fragment {
                 e.printStackTrace();
             }
         });
-
 
 
         return view;
@@ -189,6 +198,45 @@ public class ScheduleFragment extends Fragment {
                         return s2Date.compareTo(s1Date);
                     }
                 });
+                //recent 5
+                if (schedules.isEmpty()) {   //no schedule
+                    llRecent5.removeAllViews();
+                    linearLayoutCompat.removeAllViews();
+
+                    View noDataView = LayoutInflater.from(getContext()).inflate(R.layout.view_nodata, null);
+                    llRecent5.setGravity(Gravity.CENTER);
+                    llRecent5.addView(noDataView);
+
+                    View noDataBottomView = LayoutInflater.from(getContext()).inflate(R.layout.view_nodata_bottom, null);
+                    linearLayoutCompat.setGravity(Gravity.CENTER);
+                    linearLayoutCompat.addView(noDataBottomView);
+                } else {
+                    llRecent5.removeAllViews();
+                    linearLayoutCompat.removeAllViews();
+
+                    int repeatTime = schedules.size() > 5 ? 5 : schedules.size();
+                    for (int i = 0; i < repeatTime; i++) {
+                        View recent5View = LayoutInflater.from(getContext()).inflate(R.layout.view_circle_recent5, null);
+
+                        TextView tvResult = recent5View.findViewById(R.id.view_circle_recent5_tv_result);
+                        TextView tvDate = recent5View.findViewById(R.id.view_circle_recent5_tv_date);
+
+                        if (Integer.valueOf(schedules.get(i).getHomeScore()) > Integer.valueOf(schedules.get(i).getOpponentScore())) {
+                            tvResult.setText(R.string.win);
+                        } else if (Integer.valueOf(schedules.get(i).getHomeScore()).equals(Integer.valueOf(schedules.get(i).getOpponentScore()))) {
+                            tvResult.setText(R.string.draw);
+                        } else tvResult.setText(R.string.lose);
+
+                        Calendar calendar = DateUtils.StringToCalendar(schedules.get(i).getMatchDate());
+
+                        int month = calendar.get(Calendar.MONTH) + 1;
+                        String date = month + "." + calendar.get(Calendar.DAY_OF_MONTH);
+                        tvDate.setText(date);
+
+                        llRecent5.setGravity(Gravity.CENTER);
+                        llRecent5.addView(recent5View);
+                    }
+                }
 
                 initRecyclerView();
 

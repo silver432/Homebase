@@ -191,4 +191,7 @@
     <string name="inputscore">경기점수 입력</string>
     <string name="change_schedule">일정 수정하기</string>
     <string name="delete_schedule">일정 삭제하기</string>
+    <string name="no_record">기록이 없습니다</string>
+    <string name="no_record_1">앗! 아직 등록된 일정이 없네요</string>
+    <string name="no_record_2">이번 주말에 경기 어떠세요?</string>
 </resources>

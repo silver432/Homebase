@@ -1,7 +1,9 @@
 package com.jasen.kimjaeseung.homebase.schedule;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
@@ -282,6 +284,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 public void onClick(View view) {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
                     databaseReference.child(teamCode).child(schedules.get(getAdapterPosition()).getSid()).removeValue();
+                    if (alertDialog.isShowing()) alertDialog.dismiss();
                 }
             });
 

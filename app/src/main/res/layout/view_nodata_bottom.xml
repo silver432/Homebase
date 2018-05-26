@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="108dp">
+
+    <TextView
+        android:id="@+id/view_nodata_bottom_tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/no_record_1"
+        android:textColor="@color/colorGray"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/view_nodata_bottom_tv_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_nodata_bottom_tv_1"
+        android:layout_centerHorizontal="true"
+        android:text="@string/no_record_2"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:layout_width="58dp"
+        android:layout_height="82dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="13dp"
+        android:src="@drawable/pitcher_image" />
+
+    <ImageView
+        android:layout_width="58dp"
+        android:layout_height="82dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="13dp"
+        android:src="@drawable/batter_image" />
+
+
+</RelativeLayout>
